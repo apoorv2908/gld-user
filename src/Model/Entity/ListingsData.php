@@ -78,6 +78,7 @@ class ListingsData extends Entity
         'modified' => true,
         'user' => true,
         'listing_type' => true,
-        'status' => true
+        'status' => true,
+        'practice_area_name' => true
     ];
 }

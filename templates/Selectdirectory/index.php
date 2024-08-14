@@ -65,14 +65,14 @@
                 </div>
                 <div class="mt-4">
                     <li class="text-primary">
-                        <?= $this->Html->link('Directory of Lawyers', ['controller' => 'Selectdirectory', 'action' => 'listingDirectoryOfLawyers']) ?>
+                        <?= $this->Html->link('Directory of Lawyers', ['controller' => 'Listings', 'action' => 'directoryOfLawyers']) ?>
                     </li>
                     <div class="mx-4">
                         Lawyers, also called attorneys, advocates, counsels, solicitors etc. depending on the country or region, are individuals well versed in the legal profession and authorized to practice law before a court, tribunal, forum or any other judicial authority established by law.
                     </div>
                     <br>
                     <li class="text-primary">
-                        <?= $this->Html->link('Directory of Law Firms', ['controller' => 'Selectdirectory', 'action' => 'listingDirectoryOfLawFirms']) ?>
+                        <?= $this->Html->link('Directory of Law Firms', ['controller' => 'Listings', 'action' => 'directoryOfLawFirms']) ?>
                     </li>
                     <div class="mx-4">
                         Law Firms are professional entities formed by one or more lawyers in form of a partnership or a corporate entity, engaged in providing legal advice to clients and representing them before any court of law, tribunal, forum or any other judicial authority.

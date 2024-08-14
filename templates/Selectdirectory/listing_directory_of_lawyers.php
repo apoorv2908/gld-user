@@ -55,19 +55,19 @@
 </div>
 <hr>
 
-<div class = "bgcc text-white h5 p-2 m3-5">
-Personal Information
-</div>
+
 <div class = "px-5 py-3">
 <?= $this->Form->create(null, ['type' => 'file']) ?>
 <fieldset>
-    <legend><?= __('Add Lawyer') ?></legend>
+    <div class = "bgcc text-white h5 p-2 mt-2">
+Personal Information
+</div>
     
     <?= $this->Form->control('first_name', [
                         'label' => [
                             'text' => 'First Name <span style="color: red; font-size: 20px; ">*</span>',
                             'escape' => false,
-                            'class' => 'fw-bold text-grey'
+                            'class' => 'fw-bold'
                         ],
                         'required' => true,
                         'class' => 'form-control',
@@ -86,6 +86,115 @@ Personal Information
                         'readonly' => true
                     ]) ?>
 
+<hr class = "mt-5 mb-5 text-danger">
+
+
+    <?= $this->Form->control('country', [
+        'type' => 'select',
+        'options' => $countries,
+        'empty' => '--Select Country--',
+        'label' => 'Country',
+        'class' => 'form-control',
+        'id' => 'country-id'
+    ]) ?>
+
+    <?= $this->Form->control('state', [
+        'type' => 'select',
+        'empty' => '--Select State--',
+        'label' => 'State',
+        'class' => 'form-control',
+        'id' => 'state-id'
+    ]) ?>
+
+    <?= $this->Form->control('city', [
+        'type' => 'select',
+        'empty' => '--Select City--',
+        'label' => 'City',
+        'class' => 'form-control',
+        'id' => 'city-id'
+    ]) ?>
+    <hr class = "mt-5 mb-5 text-danger">
+
+    <?= $this->Form->control('street_address_line1', [
+        'label' => [
+            'text' => 'Street Address Line 1 <span style="color: red; font-size: 20px; ">*</span>',
+            'escape' => false,
+            'class' => 'fw-bold'
+        ],
+        'required' => true,
+        'class' => 'form-control'
+    ]) ?>
+    <?= $this->Form->control('street_address_line2', [
+        'label' => [
+            'text' => 'Street Address Line 2',
+            'escape' => false,
+            'class' => 'fw-bold'
+        ],
+        'required' => false,
+        'class' => 'form-control'
+    ]) ?>
+
+<hr class = "mt-5 mb-5 text-danger">
+
+<?= $this->Form->control('email', [
+                        'label' => [
+                            'text' => 'Email <span style="color: red; font-size: 20px; ">*</span>',
+                            'escape' => false,
+                            'class' => 'fw-bold'
+                        ],
+                        'required' => true,
+                        'class' => 'form-control',
+                        'value' => $user->email,
+                        'readonly' => true
+                    ]) ?>
+
+
+<hr class = "mt-5 mb-5 text-danger">
+
+<?= $this->Form->control('website', [
+        'label' => [
+            'text' => 'Website',
+            'escape' => false,
+            'class' => 'fw-bold'
+        ],
+        'required' => false,
+        'class' => 'form-control'
+    ]) ?>
+    <?= $this->Form->control('phone', [
+        'label' => [
+            'text' => 'Phone (Include country code)',
+            'escape' => false,
+            'class' => 'fw-bold'
+        ],
+        'required' => false,
+        'class' => 'form-control',
+        'placeholder' => 'Include country code'
+    ]) ?>
+    <?= $this->Form->control('mobile', [
+        'label' => [
+            'text' => 'Mobile (Include country code) <span style="color: red; font-size: 20px; ">*</span>',
+            'escape' => false,
+            'class' => 'fw-bold'
+        ],
+        'required' => true,
+        'class' => 'form-control',
+        'placeholder' => 'Include country code'
+    ]) ?>
+    <?= $this->Form->control('image_logo', [
+        'label' => [
+            'text' => 'Upload Image/Logo <span style="color: red; font-size: 20px; ">*</span>',
+            'escape' => false,
+            'class' => 'fw-bold'
+        ],
+        'type' => 'file',
+        'required' => true,
+        'class' => 'form-control'
+    ]) ?>
+    
+
+    <div class = "bgcc text-white h5 p-2 mt-5 mb-3">
+Professional Information
+</div>
 
 <?= $this->Form->control('professional_qualifications', [
         'label' => [
@@ -128,137 +237,6 @@ Personal Information
     ]) ?>
 
 
-
-
-
-
-
-
-<?= $this->Form->control('designation', [
-                        'label' => [
-                            'text' => 'Designation <span style="color: red; font-size: 20px; ">*</span>',
-                            'escape' => false,
-                            'class' => 'fw-bold'
-                        ],
-                        'required' => true,
-                        'class' => 'form-control',
-                    ]) ?>
-    <?= $this->Form->control('country', [
-        'label' => [
-            'text' => 'Country <span style="color: red; font-size: 20px; ">*</span>',
-            'escape' => false,
-            'class' => 'fw-bold'
-        ],
-        'required' => true,
-        'class' => 'form-control'
-    ]) ?>
-    <?= $this->Form->control('state', [
-        'label' => [
-            'text' => 'State <span style="color: red; font-size: 20px; ">*</span>',
-            'escape' => false,
-            'class' => 'fw-bold'
-        ],
-        'required' => true,
-        'class' => 'form-control'
-    ]) ?>
-    <?= $this->Form->control('city', [
-        'label' => [
-            'text' => 'City <span style="color: red; font-size: 20px; ">*</span>',
-            'escape' => false,
-            'class' => 'fw-bold'
-        ],
-        'required' => true,
-        'class' => 'form-control'
-    ]) ?>
-    <?= $this->Form->control('pin_code', [
-        'label' => [
-            'text' => 'Pin Code <span style="color: red; font-size: 20px; ">*</span>',
-            'escape' => false,
-            'class' => 'fw-bold'
-        ],
-        'required' => true,
-        'class' => 'form-control'
-    ]) ?>
-    <?= $this->Form->control('street_address_line1', [
-        'label' => [
-            'text' => 'Street Address Line 1 <span style="color: red; font-size: 20px; ">*</span>',
-            'escape' => false,
-            'class' => 'fw-bold'
-        ],
-        'required' => true,
-        'class' => 'form-control'
-    ]) ?>
-    <?= $this->Form->control('street_address_line2', [
-        'label' => [
-            'text' => 'Street Address Line 2',
-            'escape' => false,
-            'class' => 'fw-bold'
-        ],
-        'required' => false,
-        'class' => 'form-control'
-    ]) ?>
-    <?= $this->Form->control('email', [
-                        'label' => [
-                            'text' => 'Email <span style="color: red; font-size: 20px; ">*</span>',
-                            'escape' => false,
-                            'class' => 'fw-bold'
-                        ],
-                        'required' => true,
-                        'class' => 'form-control',
-                        'value' => $user->email,
-                        'readonly' => true
-                    ]) ?>
-    <?= $this->Form->control('website', [
-        'label' => [
-            'text' => 'Website',
-            'escape' => false,
-            'class' => 'fw-bold'
-        ],
-        'required' => false,
-        'class' => 'form-control'
-    ]) ?>
-    <?= $this->Form->control('phone', [
-        'label' => [
-            'text' => 'Phone (Include country code)',
-            'escape' => false,
-            'class' => 'fw-bold'
-        ],
-        'required' => false,
-        'class' => 'form-control',
-        'placeholder' => 'Include country code'
-    ]) ?>
-    <?= $this->Form->control('mobile', [
-        'label' => [
-            'text' => 'Mobile (Include country code) <span style="color: red; font-size: 20px; ">*</span>',
-            'escape' => false,
-            'class' => 'fw-bold'
-        ],
-        'required' => true,
-        'class' => 'form-control',
-        'placeholder' => 'Include country code'
-    ]) ?>
-    <?= $this->Form->control('image_logo', [
-        'label' => [
-            'text' => 'Upload Image/Logo <span style="color: red; font-size: 20px; ">*</span>',
-            'escape' => false,
-            'class' => 'fw-bold'
-        ],
-        'type' => 'file',
-        'required' => true,
-        'class' => 'form-control'
-    ]) ?>
-    
-    <?= $this->Form->control('year_of_establishment', [
-        'label' => [
-            'text' => 'Year of Establishment',
-            'escape' => false,
-            'class' => 'fw-bold'
-        ],
-        'type' => 'select',
-        'options' => array_combine(range(date('Y'), 1900), range(date('Y'), 1900)),
-        'empty' => true,
-        'class' => 'form-control'
-    ]) ?>
     <div id="courts-of-practice">
         <h3>Court(s) of Practice</h3>
         <div class="court-practice-row">
@@ -285,7 +263,9 @@ Personal Information
     <button type="button" id="add-court-practice">Add More</button>
 
 
-    <br>
+    <div class = "bgcc text-white h5 p-2 mt-5 mb-3">
+        Please Select your Practice Areas
+</div>
 
     <label>Practice Areas</label><br>
     <?php foreach ($practicearea as $area): ?>
@@ -293,6 +273,10 @@ Personal Information
         <?= $this->Form->label('practice_areas[]', $area->practice_area_title) ?><br>
     <?php endforeach; ?>
    
+    <div class = "bgcc text-white h5 p-2 mt-5 mb-3">
+Brief Profile
+</div>
+    
     <?= $this->Form->control('complete_detail', [
         'label' => [
             'text' => 'Brief Profile <span style="color: red; font-size: 20px; ">*</span>',
@@ -341,5 +325,51 @@ document.getElementById('add-court-practice').addEventListener('click', function
     row.appendChild(placeInput);
 
     container.appendChild(row);
+});
+
+
+</script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#country-id').change(function() {
+        var countryId = $(this).val();
+        if (countryId) {
+            $.ajax({
+                url: '<?= $this->Url->build(['controller' => 'Selectdirectory', 'action' => 'getstates']) ?>/' + countryId,
+                type: 'GET',
+                dataType: 'json', 
+                success: function(data) {
+                    $('#state-id').html('<option value="">--Select State--</option>');
+                    $.each(data, function(key, value) {
+                        $('#state-id').append('<option value="' + key + '">' + value + '</option>');
+                    });
+                }
+            });
+        } else {
+            $('#state-id').html('<option value="">--Select State--</option>');
+            $('#city-id').html('<option value="">--Select City--</option>');
+        }
+    });
+
+    $('#state-id').change(function() {
+        var stateId = $(this).val();
+        if (stateId) {
+            $.ajax({
+                url: '<?= $this->Url->build(['controller' => 'Selectdirectory', 'action' => 'getCities']) ?>/' + stateId,
+                type: 'GET',
+                dataType: 'json', // Expect JSON response
+                success: function(data) {
+                    $('#city-id').html('<option value="">--Select City--</option>');
+                    $.each(data, function(key, value) {
+                        $('#city-id').append('<option value="' + key + '">' + value + '</option>');
+                    });
+                }
+            });
+        } else {
+            $('#city-id').html('<option value="">--Select City--</option>');
+        }
+    });
 });
 </script>

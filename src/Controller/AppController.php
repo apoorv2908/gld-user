@@ -28,15 +28,24 @@ use Cake\Controller\Controller;
  */
 class AppController extends Controller
 {
-    /**
-     * Initialization hook method.
-     *
-     * Use this method to add common initialization code like loading components.
-     *
-     * e.g. `$this->loadComponent('FormProtection');`
-     *
-     * @return void
-     */
+    
+    public function approvedListings()
+    {
+        $this->loadModel('ListingsData');
+        $approvedListings = $this->ListingsData->find('all', [
+            'conditions' => ['ListingsData.status' => 1]
+        ])->toArray(); // Convert the result set to an array
+
+        return $approvedListings;
+    }
+
+    public function recentAdded()
+    {
+        $approvedListings = $this->approvedListings();
+        $this->set(compact('approvedListings'));
+    }
+
+    
     public function initialize(): void
     {
         parent::initialize();
@@ -65,12 +74,6 @@ if ($this->request->getAttribute('identity')) {
 $this->Authentication->addUnauthenticatedActions(['index', 'view']);
 }
 
-public function approvedListings()
-{
-    $this->loadModel('ListingsData');
-    $approvedListings = $this->ListingsData->find('all', [
-        'conditions' => ['ListingsData.status' => 1]
-    ]);
-    $this->set(compact('approvedListings'));
-}
+
+
 }

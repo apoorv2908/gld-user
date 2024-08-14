@@ -64,21 +64,9 @@ class ListingsDataTable extends Table
         $validator
             ->scalar('law_firm_name')
             ->maxLength('law_firm_name', 255)
-            ->requirePresence('law_firm_name', 'create')
-            ->notEmptyString('law_firm_name');
+            ->allowEmptyString('law_firm_name');
 
-        $validator
-            ->scalar('listing_id')
-            ->maxLength('listing_id', 255)
-            ->requirePresence('listing_id', 'create')
-            ->notEmptyString('listing_id');
-
-        $validator
-            ->scalar('user_id')
-            ->maxLength('user_id', 255)
-            ->notEmptyString('user_id');
-
-        $validator
+         $validator
             ->scalar('first_name')
             ->maxLength('first_name', 255)
             ->requirePresence('first_name', 'create')
@@ -91,20 +79,17 @@ class ListingsDataTable extends Table
             ->notEmptyString('last_name');
 
         $validator
-            ->scalar('country')
-            ->maxLength('country', 255)
+            ->integer('country')
             ->requirePresence('country', 'create')
             ->notEmptyString('country');
 
         $validator
-            ->scalar('state')
-            ->maxLength('state', 255)
+            ->integer('state')
             ->requirePresence('state', 'create')
             ->notEmptyString('state');
 
         $validator
-            ->scalar('city')
-            ->maxLength('city', 255)
+            ->integer('city')
             ->requirePresence('city', 'create')
             ->notEmptyString('city');
 
@@ -129,6 +114,11 @@ class ListingsDataTable extends Table
             ->email('email')
             ->requirePresence('email', 'create')
             ->notEmptyString('email');
+
+        $validator
+            ->scalar('designation')
+            ->maxLength('designation', 255)
+            ->allowEmptyString('designation');
 
         $validator
             ->scalar('website')
@@ -167,16 +157,22 @@ class ListingsDataTable extends Table
             ->allowEmptyString('registration_number');
 
         $validator
+            ->scalar('year_of_establishment')
+            ->allowEmptyString('year_of_establishment');
+
+        $validator
             ->integer('practicing_since')
             ->allowEmptyString('practicing_since');
 
         $validator
             ->scalar('courts_of_practice')
-            ->allowEmptyString('courts_of_practice');
+            ->requirePresence('courts_of_practice', 'create')
+            ->notEmptyString('courts_of_practice');
 
         $validator
             ->scalar('practice_areas')
-            ->allowEmptyString('practice_areas');
+            ->requirePresence('practice_areas', 'create')
+            ->notEmptyString('practice_areas');
 
         $validator
             ->scalar('complete_detail')
@@ -187,6 +183,8 @@ class ListingsDataTable extends Table
             ->scalar('free_initial_consultation')
             ->requirePresence('free_initial_consultation', 'create')
             ->notEmptyString('free_initial_consultation');
+
+
 
         return $validator;
     }

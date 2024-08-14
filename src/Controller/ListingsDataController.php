@@ -2,6 +2,8 @@
 declare(strict_types=1);
 
 namespace App\Controller;
+use Laminas\Diactoros\UploadedFile;
+
 
 /**
  * ListingsData Controller
@@ -18,12 +20,11 @@ class ListingsDataController extends AppController
      */
     public function index()
     {
-        $this->paginate = [
-            'contain' => ['Users'],
-        ];
-        $listingsData = $this->paginate($this->ListingsData);
+        $this->loadModel('ListingsData');
+        $listings = $this->ListingsData->find('all');
+        $this->set(compact('listings'));
 
-        $this->set(compact('listingsData'));
+       
     }
 
     /**
@@ -49,10 +50,10 @@ class ListingsDataController extends AppController
      */
     public function add()
     {
-        $listingsData = $this->ListingsData->newEmptyEntity();
+        $listings = $this->ListingsData->newEmptyEntity();
         if ($this->request->is('post')) {
-            $listingsData = $this->ListingsData->patchEntity($listingsData, $this->request->getData());
-            if ($this->ListingsData->save($listingsData)) {
+            $listings = $this->ListingsData->patchEntity($listings, $this->request->getData());
+            if ($this->ListingsData->save($listings)) {
                 $this->Flash->success(__('The listings data has been saved.'));
 
                 return $this->redirect(['action' => 'index']);

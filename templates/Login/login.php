@@ -11,6 +11,7 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <link rel="shortcut icon" href="images/favicon.png" type="">
+
     <title>Famms - Fashion HTML Template</title>
     <!-- bootstrap core css -->
     <?= $this->Html->css(['bootstrap.css', 'font-awesome.min.css', 'style.css', 'responsive.css']) ?>
@@ -47,7 +48,7 @@
         <h3>Login</h3>
         <hr>
         <div class="d-flex justify-content-center text-green">
-            New User? Register Here
+        <?= $this->Html->link("New User? Register Here", ['action' => 'registration']) ?>
         </div>
         <?= $this->Form->create() ?>
         <fieldset>
@@ -57,12 +58,11 @@
         </fieldset>
         <?= $this->Form->submit(__('Login', ['class' => 'btn btn-primary'])); ?>
         <?= $this->Form->end() ?>
-        <?= $this->Html->link("Add User", ['action' => 'add']) ?>
     </div>
 
-    <div class="cpy_">
-        <p class="mx-auto">© 2021 All Rights Reserved By <a href="https://html.design/">Free Html Templates</a><br>Distributed By <a href="https://themewagon.com/" target="_blank">ThemeWagon</a></p>
-    </div>
+    <?= $this->element('footer') ?>
+
     <?= $this->Html->script(['jquery-3.4.1.min.js', 'popper.min.js', 'bootstrap.js', 'custom.js']) ?>
+
 </body>
 </html>

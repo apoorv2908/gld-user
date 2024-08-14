@@ -34,18 +34,33 @@ class HomepageController extends AppController
     // Pass the data to the view
     $this->set(compact('category'));
 
-    $this->loadModel('ListingsData');
+    $this->loadModel('Listings');
 
     // Fetch the practice areas from the database
-    $listings = $this->ListingsData->find('all');
+    $listings = $this->Listings->find('all');
 
     // Pass the data to the view
     $this->set(compact('listings'));
 
+    $this->loadModel('Listings');
+
+        $approvedListings = $this->Listings->find('all', [
+            'conditions' => ['Listings.status' => 1]
+        ])->toArray();
+
+        $this->set(compact('approvedListings'));
     
-    }
+        $this->loadModel('LawArticles');
 
+        $approvedArticles = $this->LawArticles->find('all', [
+            'conditions' => ['LawArticles.status' => 1]
+        ])->toArray();
 
+        $this->set(compact('approvedArticles')); }
+
+    
+
+    
 
     /**
      * View method
@@ -56,13 +71,14 @@ class HomepageController extends AppController
      */
     public function view($id = null)
     {
-        $this->loadModel('ListingsDirectoryOfLawFirms');
+        $this->loadModel('ListingsData');
 
-        // Fetch the practice areas from the database
-        $listingDirectoryOfLawFirm = $this->ListingsDirectoryOfLawFirms->get($id);
-    
-        // Pass the data to the view
-        $this->set(compact('listingDirectoryOfLawFirm'));
+        $approvedListings = $this->ListingsData->find('all', [
+            'conditions' => ['ListingsData.status' => 1]
+        ])->toArray();
+
+        $this->set(compact('approvedListings'));
+
 
     }
 

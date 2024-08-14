@@ -1,5 +1,5 @@
 
-
+<body>
                   <section class="slider_section ">
             <div class="slider_bg_box">
             <?= $this->Html->image('map.jpg') ?>            
@@ -29,3 +29,5 @@ Search 13201 Listings from 105 Countries                                 </p>
               
             </div>
          </section>
+
+</body>

@@ -36,5 +36,6 @@ class LawArticle extends Entity
         'category' => true,
         'status' => true,
         'views' => true,
+        'user_id' => true
     ];
 }

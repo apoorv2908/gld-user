@@ -15,19 +15,41 @@ class RecentaddedController extends AppController
      *
      * @return \Cake\Http\Response|null|void Renders view
      */
-    public function index()
-    {
-       
-        $this->loadModel('ListingsDirectoryOfLawFirms');
-
-        // Fetch the practice areas from the database
-        $listingDirectoryOfLawFirm = $this->ListingsDirectoryOfLawFirms->find('all');
     
-        // Pass the data to the view
-        $this->set(compact('listingDirectoryOfLawFirm'));
+    
+     public function approvedListings()
+     {
+         $this->loadModel('Listings');
+         $approvedListings = $this->Listings->find('all', [
+             'conditions' => ['Listings.status' => 1]
+         ])->toArray(); // Convert the result set to an array
+ 
+         return $approvedListings;
+     }
+
+     public function approvedArticles(){
+        $this->loadModel('LawArticle');
+         $approvedArticles = $this->LawArticle->find('all', [
+             'conditions' => ['LawArticle.status' => 1]
+         ])->toArray(); // Convert the result set to an array
+ 
+         return $approvedArticles;
+     }
+    
+     public function index()
+    {
+        $approvedListings = $this->approvedListings();
+        $this->set(compact('approvedListings'));
+
+        $approvedArticles = $this->approvedArticles();
+        $this->set(compact('approvedArticles'));
+
     
     }
 
+
+
+   
     /**
      * View method
      *
@@ -37,13 +59,12 @@ class RecentaddedController extends AppController
      */
     public function view($id = null)
     {
-        $this->loadModel('ListingsDirectoryOfLawFirms');
+        $approvedListings = $this->approvedListings();
+        $this->set(compact('approvedListings'));
 
-        // Fetch the practice areas from the database
-        $listingDirectoryOfLawFirm = $this->ListingsDirectoryOfLawFirms->get($id);
-    
-        // Pass the data to the view
-        $this->set(compact('listingDirectoryOfLawFirm'));
+        
+        $approvedArticles = $this->approvedArticles();
+        $this->set(compact('approvedArticles'));
     }
 
     /**

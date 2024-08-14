@@ -16,21 +16,51 @@ class ArticlepageController extends AppController
      * @return \Cake\Http\Response|null|void Renders view
      */
     public function initialize(): void
-{
-    parent::initialize();
-    $this->loadModel('LawArticles');
-}
-    
-     public function index()
     {
-       
+        parent::initialize();
         $this->loadModel('LawArticles');
+        $this->loadModel('Practicearea');
+    }
+    
+    public function index()
+    {
+        $this->loadModel('LawArticles');
+        $this->loadModel('Practicearea');
 
-    // Fetch the practice areas from the database
-    $lawarticles = $this->LawArticles->find('all');
+        // Search functionality
+        $query = $this->LawArticles->find('all', [
+            'conditions' => ['LawArticles.status' => 1]
+        ]);
 
-    // Pass the data to the view
-    $this->set(compact('lawarticles'));
+        $searchTerm = $this->request->getQuery('search');
+        if (!empty($searchTerm)) {
+            $query = $query->where([
+                'LawArticles.article_title LIKE' => '%' . $searchTerm . '%'
+            ]);
+        }
+
+        // Filter functionality
+        $selectedCategory = $this->request->getQuery('category');
+        if (!empty($selectedCategory)) {
+            $query = $query->where([
+                'LawArticles.category' => $selectedCategory
+            ]);
+        }
+
+        // Show entries functionality
+        $entries = $this->request->getQuery('entries', 20);
+        $this->paginate = ['limit' => $entries];
+
+        $lawarticles = $this->paginate($query);
+
+        // Fetch the practice areas for the filter dropdown
+        $practiceareas = $this->Practicearea->find('list', [
+            'keyField' => 'practice_area_title',
+            'valueField' => 'practice_area_title'
+        ])->toArray();
+
+        // Pass data to the view
+        $this->set(compact('lawarticles', 'practiceareas'));
     }
 
     /**
@@ -42,9 +72,6 @@ class ArticlepageController extends AppController
      */
     public function view($id = null)
     {
-  
-
-        
         $lawarticles = $this->LawArticles->get($id);
 
         $lawarticles->views = $lawarticles->views + 1;
@@ -56,8 +83,6 @@ class ArticlepageController extends AppController
         }
 
         $this->set(compact('lawarticles'));
-
-        
     }
 
     /**

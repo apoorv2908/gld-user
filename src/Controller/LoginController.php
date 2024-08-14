@@ -15,19 +15,40 @@ class LoginController extends AppController
     parent::beforeFilter($event);
     // Configure the login action to not require authentication, preventing
     // the infinite redirect loop issue
-    $this->Authentication->addUnauthenticatedActions(['login']);
+    $this->Authentication->addUnauthenticatedActions(['login', 'registration']);
     }
     
     public function index()
     {
-        $this->loadModel('Registration');
+        
 
-        // Fetch the practice areas from the database
-        $registration = $this->Registration->find('all');
-
-        // Pass the data to the view
-        $this->set(compact('registration'));
     }
+
+
+
+    public function registration()
+{
+    $this->loadModel('Users');
+
+    // Create a new entity for registration
+    $user = $this->Users->newEmptyEntity();
+
+    if ($this->request->is('post')) {
+        $user = $this->Users->patchEntity($user, $this->request->getData());
+        
+        // Save the registration data
+        if ($this->Users->save($user)) {
+            $this->Flash->success(__('Registration successful!'));
+
+            return $this->redirect(['action' => 'login']);
+        }
+        $this->Flash->error(__('Registration failed. Please try again.'));
+    }
+
+    // Pass the registration entity to the view
+    $this->set(compact('user'));
+}
+
 
     public function login()
 {

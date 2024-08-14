@@ -10,7 +10,7 @@
                 <div class="col-md-3">
                     <div class="box">
                         <div class="detail-box">
-                            <h5>
+                            <h6>
                                 <?= h($practicearea->practice_area_title) ?>
                             </h5>
                         </div>

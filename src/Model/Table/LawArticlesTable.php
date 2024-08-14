@@ -56,6 +56,13 @@ class LawArticlesTable extends Table
             ->requirePresence('article_title', 'create')
             ->notEmptyString('article_title');
 
+
+        $validator
+            ->scalar('user_id')
+            ->maxLength('user_id', 255)
+            ->requirePresence('user_id', 'create')
+            ->notEmptyString('user_id');
+
         $validator
             ->scalar('article_body')
             ->maxLength('article_body', 255)

@@ -13,17 +13,16 @@
                   <div class="collapse navbar-collapse" id="navbarSupportedContent">
                      <ul class="navbar-nav">
                         <li class="nav-item active">
-                           <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+                        <?= $this->Html->link('Home', ['controller' => 'Homepage', 'action' => 'index'], ['class' => 'nav-link']) ?>
                         </li>
                        <li class="nav-item dropdown">
                            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"> <span class="nav-label">Directories <span class="caret"></span></a>
 
                            <ul class="dropdown-menu">
-                           <?php foreach ($category as $category): ?>
-
-                              <li><a><?= h($category->category) ?></a></li>
-                              <?php endforeach; ?>
-
+                           <li>
+                           <?= $this->Html->link('Directory of Lawyers', ['controller' => 'Searchdirectory', 'action' => 'lawyers']) ?>
+                           </li>
+                           <li>Directory of Law Firms</li>
                             </ul>
 
                         </li>

@@ -81,6 +81,11 @@ return function (RouteBuilder $routes): void {
         $builder->connect('/selectdirectory/listing_directory_of_lawyers', ['controller' => 'Selectdirectory', 'action' => 'listingDirectoryOfLawyers']);
 $builder->connect('/selectdirectory/listing_directory_of_law_firms', ['controller' => 'Selectdirectory', 'action' => 'listingDirectoryOfLawFirms']);
 $builder->connect('/approved-listings', ['controller' => 'Selectdirectory', 'action' => 'approvedListings']);
+$builder->connect('/recent-added', ['controller' => 'Selectdirectory', 'action' => 'recentAdded']);
+$builder->connect('/myaccount/lawarticle', ['controller' => 'Myaccount', 'action' => 'submitlawarticle']);
+$builder->connect('/myaccount/myarticles', ['controller' => 'Myaccount', 'action' => 'myArticles']);
+$builder->connect('/listings/directory-of-lawyers', ['controller' => 'Listings', 'action' => 'directoryOfLawyers']);
+$builder->connect('/listings/directory-of-law-firms', ['controller' => 'Listings', 'action' => 'directoryOfLawFirms']);
 
         
         

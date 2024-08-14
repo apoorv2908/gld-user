@@ -11,89 +11,86 @@
       <meta name="description" content="" />
       <meta name="author" content="" />
       <link rel="shortcut icon" href="images/favicon.png" type="">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" integrity="sha384-4LISF5TTJX/fLmGSxO53rV4miRxdg84mZsxmO8Rx5jGtp/LbrixFETvWa5a6sESd" crossorigin="anonymous">
       <title>Famms - Fashion HTML Template</title>
       <!-- bootstrap core css -->
       <?= $this->Html->css(['bootstrap.css', 'font-awesome.min.css', 'style.css', 'responsive.css']) ?>
    </head>
    <body>
-      <!-- Header -->
-      <?= $this->element('header') ?>
-      <!-- Banner -->
-      <?= $this->element('banner-2') ?>
-      <!-- Content Section -->
-      <div class="  m-3">
-         <div class="row">
+    <!-- Header -->
+    <?= $this->element('header') ?>
+    <?= $this->element('banner-2') ?>
+
+
+    <!-- Content Section -->
+    <div class="m-3">
+
+        <div class="row">
             <!-- Filter Section -->
             <div class="col-md-3">
-               <div class="card">
-                  <div class="card-header">
-                     <h5>Filter</h5>
-                  </div>
-                  <div class="card-body">
-                     <form>
-
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Filter</h5>
+                    </div>
+                    <div class="card-body">
+                        <?= $this->Form->create(null, ['type' => 'get']) ?>
                         <div class="form-group">
-                           <label for="category">Select a Category</label>
-                           <select id="category" class="form-control">
-                              <option value="">All Categories</option>
-                              <option value="category1">Category 1</option>
-                              <option value="category2">Category 2</option>
-                              <option value="category3">Category 3</option>
-                           </select>
+                            <label for="category">Select a Practice Area</label>
+                            <?= $this->Form->select('category', $practiceareas, ['empty' => 'All Categories', 'class' => 'form-control', 'id' => 'category']) ?>
                         </div>
-                        <button type="submit" class="btn btn-primary btn-block">Apply Filter</button>
-                     </form>
-                  </div>
-               </div>
+                        <?= $this->Form->submit('Apply Filter', ['class' => 'btn btn-primary btn-block mt-3']) ?>
+                        <?= $this->Form->end() ?>
+                    </div>
+                </div>
             </div>
+
             <!-- Articles Section -->
             <div class="col-md-9">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5>Found Results</h5>
+                    <div>
+                        <?= $this->Form->create(null, ['type' => 'get', 'class' => 'd-inline-block']) ?>
+                        <label for="entries">Show</label>
+                        <?= $this->Form->select('entries', [10 => '10', 20 => '20', 50 => '50'], ['default' => 20, 'class' => 'form-control d-inline-block', 'id' => 'entries', 'style' => 'width: auto;']) ?>
+                        <span>entries</span>
+                        <?= $this->Form->end() ?>
+                    </div>
+                    <div>
+                        <?= $this->Form->create(null, ['type' => 'get', 'class' => 'd-inline-block']) ?>
+                        <?= $this->Form->text('search', ['placeholder' => 'Search', 'class' => 'form-control']) ?>
+                        <?= $this->Form->end() ?>
+                    </div>
+                </div>
+                <hr>
 
-               <div class="d-flex justify-content-between align-items-center mb-3">
-                  <h5>Found           
-                  Results</h5>
-                  <div>
-                     <label for="entries">Show</label>
-                     <select id="entries" class="form-control d-inline-block" style="width: auto;">
-                        <option value="10">10</option>
-                        <option value="20" selected>20</option>
-                        <option value="50">50</option>
-                     </select>
-                     <span>entries</span>
-                  </div>
-                  <div>
-                     <input type="text" class="form-control" placeholder="Search">
-                  </div>
-               </div>
-               <hr>
-               <?php foreach ($lawarticles as $lawarticles): ?>
+                <?php foreach ($lawarticles as $article): ?>
+                <div class="article bg-light mt-3 p-2 shadow" style="border-radius: 10px;">
+                    <h3 class="text-primary">
+                        <?= $this->Html->link($article->article_title, ['controller' => 'Articlepage', 'action' => 'view', $article->id]) ?>
+                    </h3>
+                    <hr>
+                    <p class="text-secondary">
+                        <i class="bi bi-person-fill"></i> Added By: <?= h($article->added_by) ?><span class ="mx-3"></span>
+                        <i class="bi bi-tags-fill "></i> Category: <?= h($article->category) ?><span class ="mx-3"></span>
+                        <i class="bi bi-hash "></i> Article ID: <?= h($article->id) ?><span class ="mx-3"></span>
+                        <i class="bi bi-calendar "></i> Added On: <?= h($article->added_on) ?><span class ="mx-3"></span>
+                        <i class="bi bi-eye-fill"></i> Views: <?= h($article->views) ?><span class ="mx-3"></span>
+                    </p>
+                    <p><?= h($article->article_body) ?> <a href="#">Read More...</a></p>
+                </div>
+                <?php endforeach; ?>
 
-                <div class="article bg-light mt-3 p-2" style="border-radius: 10px;">
-
-                  <h3 class = "text-primary">              
-                  <a href="<?= $this->Url->build(['controller' => 'Articlepage', 'action' => 'view', $lawarticles->id]) ?>">
-                <?= h($lawarticles->article_title) ?>
-            </a>
-                  </h3>
-                  <p>Added By:                <?= h($lawarticles->added_by) ?>
-                  , Category:                <?= h($lawarticles->category) ?>
-                  , Article Id:                <?= h($lawarticles->id) ?>
-                  , Added On:                <?= h($lawarticles->added_on) ?>
-                  , Views:                <?= h($lawarticles->views) ?>
-                  </p>
-                  <p>               <?= h($lawarticles->article_body) ?>
-                  <a href="#">Read More...</a></p>
-               </div>
-               <?php endforeach; ?>
-
+                <!-- Pagination -->
+                <div class="d-flex justify-content-center mt-4">
+                    <?= $this->Paginator->prev('< ' . __('previous')) ?>
+                    <?= $this->Paginator->numbers() ?>
+                    <?= $this->Paginator->next(__('next') . ' >') ?>
+                </div>
             </div>
-
-         </div>
-      </div>
-      <!-- Footer -->
-      <div class="cpy_">
-         <p class="mx-auto">© 2021 All Rights Reserved By <a href="https://html.design/">Free Html Templates</a><br>Distributed By <a href="https://themewagon.com/" target="_blank">ThemeWagon</a></p>
-      </div>
-      <?= $this->Html->script(['jquery-3.4.1.min.js', 'popper.min.js', 'bootstrap.js', 'custom.js' ]) ?>
-   </body>
-</html>
+        </div>
+                </div>
+    <!-- Footer -->
+    <div class="cpy_">
+        <p class="mx-auto">© 2024 All Rights Reserved By Your Company</p>
+    </div>
+</body></html>

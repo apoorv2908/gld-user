@@ -25,7 +25,68 @@ class MyaccountController extends AppController
         // Pass the data to the view
         $this->set(compact('user'));
 
+        $this->loadModel('LawArticles');
+
+        // Fetch the practice areas from the database
+        $lawarticles = $this->LawArticles->find('all');
+    
+        // Pass the data to the view
+        $this->set(compact('lawarticles'));
+
     }
+
+    public function submitlawarticle()
+{
+    $this->loadModel('Users');
+    $this->loadModel('LawArticles');
+    $this->loadModel('Practicearea');
+
+    // Fetch users, law articles, and practice areas
+    $users = $this->Users->find('all');
+    $lawarticles = $this->LawArticles->find('all');
+    $practiceareas = $this->Practicearea->find('all')->toArray(); // Fetch practice areas as an array
+    $user = $this->Authentication->getIdentity(); // Fetch logged-in user's details
+
+    $currentDate = date('Y-m-d');
+
+    // Pass the data to the view
+    $this->set(compact('users', 'lawarticles', 'practiceareas', 'user', 'currentDate'));
+
+    // Check if the request is a POST or PUT
+    if ($this->request->is(['post', 'put'])) {
+        // Create a new entity or get the existing entity
+        $lawArticle = $this->LawArticles->newEntity($this->request->getData());
+        
+        // Set the user_id to the logged-in user's ID
+        $lawArticle->user_id = $user->id;
+        $lawArticle->status = "0";
+
+
+        // Save the entity
+        if ($this->LawArticles->save($lawArticle)) {
+            $this->Flash->success(__('The law article has been saved.'));
+            return $this->redirect(['action' => 'index']); // Redirect to an appropriate page
+        } else {
+            $this->Flash->error(__('Unable to add the law article.'));
+        }
+    }
+}
+
+
+
+public function myArticles()
+{
+    $this->loadModel('LawArticles');
+    $user = $this->Authentication->getIdentity(); // Fetch logged-in user's details
+
+    // Fetch articles submitted by the logged-in user
+    $lawarticles = $this->LawArticles->find('all')
+        ->where(['user_id' => $user->id])
+        ->toArray();
+
+    // Pass the data to the view
+    $this->set(compact('lawarticles'));
+}
 
     /**
      * View method
@@ -50,6 +111,7 @@ class MyaccountController extends AppController
      */
     public function add()
     {
+
         $myaccount = $this->Myaccount->newEmptyEntity();
         if ($this->request->is('post')) {
             $myaccount = $this->Myaccount->patchEntity($myaccount, $this->request->getData());
@@ -86,7 +148,35 @@ class MyaccountController extends AppController
         }
 
         $this->set(compact('user'));
+
     }
+
+    public function edit2($id = null)
+{
+    $this->loadModel('LawArticles');
+    $user = $this->Authentication->getIdentity();
+
+    // Fetch the article and ensure it belongs to the logged-in user
+    $article = $this->LawArticles->get($id);
+    if ($article->user_id !== $user->id) {
+        $this->Flash->error(__('You do not have permission to edit this article.'));
+        return $this->redirect(['action' => 'myArticles']);
+    }
+
+    if ($this->request->is(['post', 'put'])) {
+        $this->LawArticles->patchEntity($article, $this->request->getData());
+        if ($this->LawArticles->save($article)) {
+            $this->Flash->success(__('The article has been updated.'));
+            return $this->redirect(['action' => 'myArticles']);
+        } else {
+            $this->Flash->error(__('Unable to update the article.'));
+        }
+    }
+
+    // Pass the article data to the view
+    $this->set(compact('article'));
+}
+
 
     /**
      * Delete method
