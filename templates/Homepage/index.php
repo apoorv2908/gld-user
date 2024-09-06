@@ -10,32 +10,29 @@
       <meta name="keywords" content="" />
       <meta name="description" content="" />
       <meta name="author" content="" />
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
       <link rel="shortcut icon" href="images/favicon.png" type="">
-      <title>Famms - Fashion HTML Template</title>
+      
+      <title>Homepage - Global Law Directory</title>
       <!-- bootstrap core css -->
-      <?= $this->Html->css(['bootstrap.css', 'font-awesome.min.css', 'style.css', 'responsive.css']) ?>
+      <?= $this->Html->css(['bootstrap.css', 'style.css', 'responsive.css']) ?>
 
    </head>
    <body>
       
-      <!-- why section -->
       <?= $this->element('header') ?>
 
       <?= $this->element('banner') ?>
+      <div class = "bg-grey">
       <?= $this->element('content-2') ?>
+      <div>
 
-<hr>
 <div class = "bg-grey">
 <?= $this->element('recentadded') ?>
 </div>
 
 
 
-
-
-      
-      <!-- end client section -->
-      <!-- footer start -->
       
       <?= $this->element('footer') ?>
 

@@ -72,25 +72,24 @@
                     <p class="text-secondary">
                         <i class="bi bi-person-fill"></i> Added By: <?= h($article->added_by) ?><span class ="mx-3"></span>
                         <i class="bi bi-tags-fill "></i> Category: <?= h($article->category) ?><span class ="mx-3"></span>
-                        <i class="bi bi-hash "></i> Article ID: <?= h($article->id) ?><span class ="mx-3"></span>
                         <i class="bi bi-calendar "></i> Added On: <?= h($article->added_on) ?><span class ="mx-3"></span>
                         <i class="bi bi-eye-fill"></i> Views: <?= h($article->views) ?><span class ="mx-3"></span>
                     </p>
-                    <p><?= h($article->article_body) ?> <a href="#">Read More...</a></p>
+                    <p> <?php 
+            $words = explode(' ', $article->article_body);
+            $excerpt = implode(' ', array_slice($words, 0, 40)) . '...';
+            ?>
+            <?= $excerpt ?>
+            <?= $this->Html->link('Read More', ['action' => 'viewLawArticle', $article->id], ['class' => 'read-more-link']) ?></p>
                 </div>
                 <?php endforeach; ?>
 
                 <!-- Pagination -->
-                <div class="d-flex justify-content-center mt-4">
-                    <?= $this->Paginator->prev('< ' . __('previous')) ?>
-                    <?= $this->Paginator->numbers() ?>
-                    <?= $this->Paginator->next(__('next') . ' >') ?>
-                </div>
+                
             </div>
         </div>
                 </div>
     <!-- Footer -->
-    <div class="cpy_">
-        <p class="mx-auto">© 2024 All Rights Reserved By Your Company</p>
-    </div>
+    <?= $this->element('footer') ?>
+
 </body></html>

@@ -13,9 +13,10 @@ use Cake\ORM\Entity;
  * @property string $article_body
  * @property string $added_by
  * @property \Cake\I18n\FrozenDate $added_on
+ * @property string $user_id
  * @property string $category
  * @property int $status
- * @property string|null $views
+ * @property int|null $views
  */
 class LawArticle extends Entity
 {
@@ -33,9 +34,9 @@ class LawArticle extends Entity
         'article_body' => true,
         'added_by' => true,
         'added_on' => true,
+        'user_id' => true,
         'category' => true,
         'status' => true,
         'views' => true,
-        'user_id' => true
     ];
 }

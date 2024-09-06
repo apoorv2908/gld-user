@@ -55,7 +55,7 @@ return function (RouteBuilder $routes): void {
          * its action called 'display', and we pass a param to select the view file
          * to use (in this case, templates/Pages/home.php)...
          */
-        $builder->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
+        $builder->connect('/', ['controller' => 'Homepage', 'action' => 'index']);
 
         /*
          * ...and connect the rest of 'Pages' controller's URLs.
@@ -86,7 +86,13 @@ $builder->connect('/myaccount/lawarticle', ['controller' => 'Myaccount', 'action
 $builder->connect('/myaccount/myarticles', ['controller' => 'Myaccount', 'action' => 'myArticles']);
 $builder->connect('/listings/directory-of-lawyers', ['controller' => 'Listings', 'action' => 'directoryOfLawyers']);
 $builder->connect('/listings/directory-of-law-firms', ['controller' => 'Listings', 'action' => 'directoryOfLawFirms']);
+$builder->connect('/listings/our-subscription-plan', ['controller' => 'Listings', 'action' => 'ourSubscriptionPlan']);
 
+$builder->connect(
+    '/your-payment-action/:orderId',
+    ['controller' => 'Payments', 'action' => 'yourPaymentAction'],
+    ['pass' => ['orderId'], 'orderId' => '\d+']
+);
         
         
         $builder->fallbacks(DashedRoute::class);

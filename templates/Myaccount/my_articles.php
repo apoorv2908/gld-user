@@ -1,6 +1,4 @@
 
-
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,7 +12,7 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <link rel="shortcut icon" href="images/favicon.png" type="">
-    <title>Famms - Fashion HTML Template</title>
+    <title>My Law Articles - Global Law Directory</title>
     <!-- bootstrap core css -->
     <?= $this->Html->css(['bootstrap.css', 'font-awesome.min.css', 'style.css', 'responsive.css']) ?>
 </head>
@@ -31,51 +29,51 @@
             <!-- Articles Section -->
             <div class="col-md-9 shadow ">
 
-            <div>
-            <div class = "d-flex justify-content-center mt-3 cc h4">
-MY ARTICLES
-</div>
 
+            <div class = "d-flex justify-content-center mt-3 cc h4">
+MY LAW ARTICLES
+</div>
 <hr>
 
-        <?php foreach ($lawarticles as $article): ?>
+
+<div class = "p-4">
+<?php if (!empty($lawarticles)): ?>
+        <?php foreach ($lawarticles as $lawarticle): ?>
             <div class="listing-item">
-            <div class="listing-info">
-                <h3>
-                    <?= $this->Html->link(h($article->article_title), ['action' => 'view', $article->id]) ?>
-
-                </h3>
-                <p><?= h($article->article_body) ?></p>
-
-            </div>
-            <div class = "d-flex justify-content-between">
-            <p><?= h($article->added_on) ?></p>
-            <div>
-                <?= $this->Html->link(__('View'), ['action' => 'view', $article->id, 'class'=> 'btn btn-primary']) ?>
-                <?= $this->Html->link(__('Edit'), ['action' => 'edit2', $article->id, 'class'=> 'btn btn-primary']) ?>
-
-            </div>
+    <div class="listing-info">
+        <h6 class="cl">
+            <?= $this->Html->link(h($lawarticle->article_title), ['action' => 'viewLawArticle', $lawarticle->id]) ?>
+        </h6>
+        <div class="at-1">
+            <p>Submitted on: <span class="cl"><?= h($lawarticle->added_on) ?></span> Submitted by: <span class="cl"><?= h($lawarticle->added_by) ?></span></p>
         </div>
+        <div class="at-1">
+            <?php 
+            $words = explode(' ', $lawarticle->article_body);
+            $excerpt = implode(' ', array_slice($words, 0, 30)) . '...';
+            ?>
+            <?= h($excerpt) ?>
+            <?= $this->Html->link('Read More', ['action' => 'viewLawArticle', $lawarticle->id], ['class' => 'read-more-link']) ?>
         </div>
+    </div>
+</div>
+     <?php endforeach; ?>
 
+<?php else: ?>
+    <p>You have no added articles.</p>
+<?php endif; ?> 
         
-    <?php endforeach; ?>
-
-
+</div>
         </div>
-
-
+    </div>
+</div>
+                
             </div>
-
         </div>
-
-
-            
     </div>
     <!-- Footer -->
-    <div class="cpy_">
-        <p class="mx-auto">© 2021 All Rights Reserved By <a href="https://html.design/">Free Html Templates</a><br>Distributed By <a href="https://themewagon.com/" target="_blank">ThemeWagon</a></p>
-    </div>
+    <?= $this->element('footer') ?>
+
     <?= $this->Html->script(['jquery-3.4.1.min.js', 'popper.min.js', 'bootstrap.js', 'custom.js']) ?>
 </body>
 </html>

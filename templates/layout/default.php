@@ -6,17 +6,17 @@
 <head>
    
 </head>
+<?= $this->Html->script(['jquery-3.4.1.min.js', 'popper.min.js', 'bootstrap.js']) ?>
+
 <body>
     <nav>
        
     </nav>
     <main class="main">
-        <div class="container">
-            <?= $this->Flash->render() ?>
             <?= $this->fetch('content') ?>
-        </div>
     </main>
     <footer>
+
     </footer>
 </body>
 </html>

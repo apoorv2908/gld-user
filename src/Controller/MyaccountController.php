@@ -2,6 +2,8 @@
 declare(strict_types=1);
 
 namespace App\Controller;
+use Cake\Log\Log;
+
 
 /**
  * Myaccount Controller
@@ -19,6 +21,7 @@ class MyaccountController extends AppController
     {
         $this->loadModel('Users');
 
+
         // Fetch the practice areas from the database
         $user = $this->Users->find('all');
     
@@ -29,6 +32,8 @@ class MyaccountController extends AppController
 
         // Fetch the practice areas from the database
         $lawarticles = $this->LawArticles->find('all');
+
+       
     
         // Pass the data to the view
         $this->set(compact('lawarticles'));
@@ -36,42 +41,50 @@ class MyaccountController extends AppController
     }
 
     public function submitlawarticle()
-{
-    $this->loadModel('Users');
-    $this->loadModel('LawArticles');
-    $this->loadModel('Practicearea');
-
-    // Fetch users, law articles, and practice areas
-    $users = $this->Users->find('all');
-    $lawarticles = $this->LawArticles->find('all');
-    $practiceareas = $this->Practicearea->find('all')->toArray(); // Fetch practice areas as an array
-    $user = $this->Authentication->getIdentity(); // Fetch logged-in user's details
-
-    $currentDate = date('Y-m-d');
-
-    // Pass the data to the view
-    $this->set(compact('users', 'lawarticles', 'practiceareas', 'user', 'currentDate'));
-
-    // Check if the request is a POST or PUT
-    if ($this->request->is(['post', 'put'])) {
-        // Create a new entity or get the existing entity
-        $lawArticle = $this->LawArticles->newEntity($this->request->getData());
-        
-        // Set the user_id to the logged-in user's ID
-        $lawArticle->user_id = $user->id;
-        $lawArticle->status = "0";
-
-
-        // Save the entity
-        if ($this->LawArticles->save($lawArticle)) {
-            $this->Flash->success(__('The law article has been saved.'));
-            return $this->redirect(['action' => 'index']); // Redirect to an appropriate page
-        } else {
-            $this->Flash->error(__('Unable to add the law article.'));
+    {
+        $this->loadModel('Users');
+        $this->loadModel('LawArticles');
+        $this->loadModel('Practicearea');
+    
+        // Fetch users, law articles, and practice areas
+        $users = $this->Users->find('all');
+        $lawarticles = $this->LawArticles->find('all');
+        $practiceareas = $this->Practicearea->find('all')->toArray(); // Fetch practice areas as an array
+        $user = $this->Authentication->getIdentity(); // Fetch logged-in user's details
+    
+        $currentDate = date('Y-m-d');
+    
+        // Pass the data to the view
+        $this->set(compact('users', 'lawarticles', 'practiceareas', 'user', 'currentDate'));
+    
+        // Check if the request is a POST or PUT
+        if ($this->request->is(['post', 'put'])) {
+            // Log the incoming request data
+            Log::write('debug', 'Request Data: ' . json_encode($this->request->getData()));
+    
+            // Create a new entity or get the existing entity
+            $lawArticle = $this->LawArticles->newEntity($this->request->getData());
+    
+            // Set the user_id to the logged-in user's ID
+            $lawArticle->user_id = $user->id;
+            $lawArticle->status = "0";
+    
+            // Log the entity data before saving
+            Log::write('debug', 'Law Article Data: ' . json_encode($lawArticle));
+    
+            // Save the entity
+            if ($this->LawArticles->save($lawArticle)) {
+                $this->Flash->success(__('The law article has been saved.'));
+                Log::write('info', 'Law article saved successfully with ID: ' . $lawArticle->id);
+                return $this->redirect(['action' => 'index']); // Redirect to an appropriate page
+            } else {
+                // Log the validation errors
+                Log::write('error', 'Law article could not be saved. Errors: ' . json_encode($lawArticle->getErrors()));
+                $this->Flash->error(__('Unable to add the law article.'));
+            }
         }
     }
-}
-
+    
 
 
 public function myArticles()
@@ -197,4 +210,23 @@ public function myArticles()
 
         return $this->redirect(['action' => 'index']);
     }
+
+
+
+    public function myListings()
+    {
+        $this->loadModel('Listings');
+        $user = $this->Authentication->getIdentity(); // Fetch logged-in user's details
+
+        // Fetch listings added by the logged-in user
+        $listings = $this->Listings->find('all')
+            ->where(['user_id' => $user->id])
+            ->toArray();
+
+        // Pass the data to the view
+        $this->set(compact('listings'));
+    }
+
+
+    
 }

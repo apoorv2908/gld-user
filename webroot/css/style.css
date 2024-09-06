@@ -1,10 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Reddit+Sans+Condensed:wght@200..900&display=swap');
 
 * {
   box-sizing: border-box;
 }
 body {
-  font-family: 'Inter';
+  font-family: "Reddit Sans Condensed", sans-serif;
   color: #0c0c0c;
   background-color: #ffffff;
   overflow-x: hidden;
@@ -14,12 +14,28 @@ body {
   padding: 50px 0;
 }
 
+li:hover{
+  cursor: pointer;
+}
+
+
 .layout_padding2 {
   padding: 75px 0;
 }
 
 .layout_padding2-top {
   padding-top: 75px;
+}
+
+.contactus-form{
+  width: 800px;
+  margin: 50px auto;
+}
+
+.random2{
+  border: 1px solid white;
+  padding: 5px;
+  border-radius: 10px;
 }
 
 .layout_padding2-bottom {
@@ -34,10 +50,7 @@ body {
   padding-bottom: 90px;
 }
 
-h1,
-h2 {
-  font-family: 'Inter';
-}
+
 
 .heading_container {
   display: -webkit-box;
@@ -122,13 +135,47 @@ a:focus {
 }
 
 .header_section {
-    padding: 15px 0;
+    padding: 10px 0;
 }
 
 .header_section .container-fluid {
   padding-right: 25px;
   padding-left: 25px;
 }
+
+/* General Dropdown Styles */
+.navbar-nav .dropdown-menu {
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Dropdown items */
+.navbar-nav .dropdown-item {
+  color: #333;
+  font-weight: 500;
+}
+
+.navbar-nav .dropdown-item:hover {
+  background-color: #f0f0f0;
+  color: #000;
+}
+
+/* Adjust User Dropdown Size */
+.navbar-nav .dropdown-menu {
+  min-width: 100px; /* Adjust as needed */
+}
+
+/* Remove button style from user name */
+.navbar-nav .dropdown-toggle {
+  padding: 0;
+  font-weight: bold;
+}
+
+.navbar-nav .dropdown-toggle:hover {
+  color: #ccc;
+}
+
 
 .navbar-brand {
   font-family: 'Playfair Display', serif;
@@ -590,7 +637,7 @@ a:focus {
 }
 
 .footer {
-  background-color: #0a2748;
+  background-color: #002149;
   color: #ffffff;
   padding: 40px 0;
 }
@@ -1010,8 +1057,15 @@ li.nav-item ul li a:hover, li.nav-item ul li a:focus {
     font-weight: 800;
 }
 
+.sf{
+  font-size: small;
+}
+
 /** footer **/
 
+.plaincontext{
+  font-size: 15px;
+}
 
 .logo_footer {
     margin-bottom: 30px;
@@ -1095,7 +1149,6 @@ form input {
     width: 100%;
     font-size: 14px;
     margin-bottom: 20px;
-    text-transform: capitalize;
     line-height: normal;
 }
 
@@ -1111,9 +1164,30 @@ form textarea {
     line-height: normal;
 }
 
+.at-1{
+  font-size: small;
+}
+
+.cl{
+  color: #157efb;
+}
+
+.cl-2{
+  color: #165fa2;
+}
+
+.blah{
+  font-size: small;
+}
+
+
+.cl-3{
+  background-color: #165fa2;
+  color: white;
+  padding: 10px;
+}
 form input[type="submit"] {
     border: none;
-    padding: 15px 45px;
     width: auto;
     font-size: 16px;
     text-transform: capitalize;
@@ -1206,8 +1280,8 @@ form input[type="submit"]:focus {
 
 
 .listing-image img {
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
   object-fit: cover;
   border-radius: 5px;
   margin-right: 20px;
@@ -1238,11 +1312,12 @@ form input[type="submit"]:focus {
 .view-listing-button {
   display: inline-block;
   margin-top: 10px;
-  padding: 5px 10px;
-  background-color: #007bff;
-  color: #fff;
-  text-decoration: none;
+  padding: 2px 5px;
+  background-color: white;
+  color: black;
   border-radius: 5px;
+  border: 1px solid #157efb;
+  font-size: small;
 }
 
 .cc{
@@ -1252,9 +1327,7 @@ form input[type="submit"]:focus {
 .bgcc{
   background-color: #165fa2;
 }
-.view-listing-button:hover {
-  background-color: #0056b3;
-}
+
 
 
 http://kute-themes.com/html/boutique/html/index.html

@@ -36,6 +36,8 @@ use Authentication\AuthenticationServiceProviderInterface;
 use Authentication\Middleware\AuthenticationMiddleware;
 use Cake\Routing\Router;
 use Psr\Http\Message\ServerRequestInterface;
+use Cake\Core\Plugin;
+
 
 /**
  * Application setup class.
@@ -56,6 +58,7 @@ implements AuthenticationServiceProviderInterface
         // Call parent to load bootstrap from files.
         parent::bootstrap();
 
+
         if (PHP_SAPI === 'cli') {
             $this->bootstrapCli();
         } else {
@@ -74,7 +77,10 @@ implements AuthenticationServiceProviderInterface
         }
 
         // Load more plugins here
+        $this->addPlugin('PayPal');
     }
+
+    
 
     /**
      * Setup the middleware queue your application will use.

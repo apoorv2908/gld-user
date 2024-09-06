@@ -65,12 +65,20 @@ public function listingDirectoryOfLawyers()
     $this->loadModel('Countries');
     $this->loadModel('States');
     $this->loadModel('Cities');
+    $this->loadModel('Users');
+
 
     // Fetch practice areas and countries
     $practicearea = $this->Practicearea->find('all')->toArray();
     $countries = $this->Countries->find('list', ['keyField' => 'id', 'valueField' => 'name'])->toArray();
 
     $user = $this->Authentication->getIdentity(); // Fetch logged-in user's details
+
+    
+    $userRecord = $this->Users->get($user->id);
+    if ($userRecord->has_user_paid == 0) {
+        return $this->redirect(['controller' => 'Subscription', 'action' => 'add']);
+    }
 
     // Pass the data to the view
     $this->set(compact('practicearea', 'countries', 'user'));
@@ -165,12 +173,20 @@ public function getCities($stateId)
     {
         $this->loadModel('Practicearea');
         $this->loadModel('ListingsData');
-        $this->loadModel('Users'); // Assuming 'Users' is your users table
+        $this->loadModel('Users'); 
     
         $practicearea = $this->Practicearea->find('all');
         $this->set(compact('practicearea'));
-    
+
         $user = $this->Authentication->getIdentity(); // Fetch logged-in user's details
+
+    
+        $userRecord = $this->Users->get($user->id);
+        if ($userRecord->has_user_paid == 0) {
+            return $this->redirect(['controller' => 'Subscription', 'action' => 'add']);
+        }
+    
+   
         $this->set(compact('user'));
     
         if ($this->request->is('post')) {

@@ -1,39 +1,34 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <!-- Basic -->
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <!-- Mobile Metas -->
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <!-- Site Metas -->
-    <meta name="keywords" content="" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-    <link rel="shortcut icon" href="images/favicon.png" type="">
-
-    <title>Famms - Fashion HTML Template</title>
-    <!-- bootstrap core css -->
+    <title>Login - Global Law Directory</title>
     <?= $this->Html->css(['bootstrap.css', 'font-awesome.min.css', 'style.css', 'responsive.css']) ?>
 </head>
+<style>
+.registration-container{
+    width: 800px;
+    margin: 50px auto;
+  
+}
+</style>
 <body>
-    <!-- Header -->
     <?= $this->element('header') ?>
-    <!-- Banner -->
-    <section class="slider_section ">
+
+    <section class="slider_section">
         <div class="slider_bg_box">
             <?= $this->Html->image('privacy.jpg') ?>            
         </div>
         <div id="customCarousel1" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <div class="container ">
+                    <div class="container">
                         <div class="row">
-                            <div class="col-md-7 col-lg-12 ">
+                            <div class="col-md-7 col-lg-12">
                                 <div class="d-flex justify-content-center">
-                                    <h1 class="text-white text-bold">
-                                        MY ACCOUNT
-                                    </h1>
+                                    <h1 class="text-white text-bold">MY ACCOUNT</h1>
                                 </div>
                             </div>
                         </div>
@@ -42,27 +37,49 @@
             </div>
         </div>
     </section>
+    <div class="registration-container">
 
     <div class="users form m-5 p-5 shadow">
-        <?= $this->Flash->render() ?>
         <h3>Login</h3>
         <hr>
-        <div class="d-flex justify-content-center text-green">
-        <?= $this->Html->link("New User? Register Here", ['action' => 'registration']) ?>
-        </div>
-        <?= $this->Form->create() ?>
+        
+        <?= $this->Form->create(null, ['type' => 'post']) ?>
         <fieldset>
-            <?= $this->Form->control('email', ['required' => true, 'placeholder' => 'Enter your email', 'class' => 'form-control fw-bold']) ?>
-            <?= $this->Form->control('password', ['required' => true, 'placeholder' => 'Enter your password', 'class' => "form-control"]) ?>
-            
+            <b>
+            <?= $this->Form->control('email', [
+                'required' => true, 
+                'placeholder' => 'Enter your email', 
+                'class' => ' fw-bold'
+            ]) ?>
+            </b>
+            <b>
+            <?= $this->Form->control('password', [
+                'required' => true, 
+                'placeholder' => 'Enter your password'
+            ]) ?>
+            </b>
+            <hr>
+            <div class="captcha-container fw-bold mt-4">
+                    <span class="captcha-code p-2 bg-light border rounded mr-2 h3 text-decoration-line-through">
+                        <?= h($captcha_code) ?>
+                    </span><br></br><b>
+                    <?= $this->Form->control('captcha', [
+    'required' => true,
+    'placeholder' => 'Enter the CAPTCHA code',
+]) ?></b>
+
+            </div>
+                   
         </fieldset>
         <?= $this->Form->submit(__('Login', ['class' => 'btn btn-primary'])); ?>
+        <div class="d-flex justify-content-end text-success">
+            <?= $this->Html->link("New User? Register Here", ['action' => 'registration']) ?>
+        </div>
         <?= $this->Form->end() ?>
     </div>
+                    </div>
 
     <?= $this->element('footer') ?>
-
     <?= $this->Html->script(['jquery-3.4.1.min.js', 'popper.min.js', 'bootstrap.js', 'custom.js']) ?>
-
 </body>
 </html>

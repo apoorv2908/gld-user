@@ -58,6 +58,8 @@ class ListingsController extends AppController
      */
     public function add()
     {
+
+        
         $listing = $this->Listings->newEmptyEntity();
         if ($this->request->is('post')) {
             $listing = $this->Listings->patchEntity($listing, $this->request->getData());
@@ -117,6 +119,9 @@ class ListingsController extends AppController
 
     public function directoryOfLawyers()
 {
+
+
+
     $this->loadModel('Practicearea');
     $this->loadModel('Listings');
     $this->loadModel('Countries');
@@ -130,6 +135,11 @@ class ListingsController extends AppController
 
     // Fetch logged-in user's details
     $user = $this->Authentication->getIdentity();
+
+    $userRecord = $this->Users->get($user->id);
+    if ($userRecord->has_user_paid == 0) {
+        return $this->redirect(['controller' => 'Subscription', 'action' => 'add']);
+    }
 
     // Pass the data to the view
     $this->set(compact('practicearea', 'countries', 'user'));
@@ -230,6 +240,7 @@ class ListingsController extends AppController
     
 public function directoryOfLawFirms()
 {
+
     $this->loadModel('Practicearea');
     $this->loadModel('Listings');
     $this->loadModel('Countries');
@@ -243,6 +254,11 @@ public function directoryOfLawFirms()
 
     // Fetch logged-in user's details
     $user = $this->Authentication->getIdentity();
+
+    $userRecord = $this->Users->get($user->id);
+    if ($userRecord->has_user_paid == 0) {
+        return $this->redirect(['controller' => 'Subscription', 'action' => 'add']);
+    }
 
     // Pass the data to the view
     $this->set(compact('practicearea', 'countries', 'user'));
@@ -344,6 +360,55 @@ public function directoryOfLawFirms()
     // Render the specific view for this method
     $this->render('directory_of_law_firms');
 
+}
+
+
+public function ourSubscriptionPlan()
+{
+
+    $this->loadModel('Users');
+    $this->loadModel('UserSubscription');
+
+
+
+    // Fetch the practice areas from the database
+    $user = $this->Users->find('all');
+
+    // Pass the data to the view
+    $this->set(compact('user'));
+}
+
+protected function createOrder()
+{
+    $this->loadModel('Orders');
+
+    // Get the logged-in user
+    $user = $this->Authentication->getIdentity();
+    if (!$user) {
+        // Handle case where no user is logged in
+        $this->Flash->error(__('User not logged in.'));
+        return null;
+    }
+
+    // Define the amount for the order (you may want to calculate this based on your listing details)
+    $amount = 49.00; // Example amount, replace with actual logic
+
+    // Create a new order entity
+    $order = $this->Orders->newEmptyEntity();
+    $order->user_id = $user->id;
+    $order->amount = $amount;
+    $order->status = 'pending';
+
+    // Save the order
+    if ($this->Orders->save($order)) {
+        // Return the auto-generated ID of the newly created order
+        return $order->id;
+    } else {
+        // Log the error and display a message
+        $this->log($order->getErrors(), 'error');
+        $this->Flash->error(__('The order could not be created. Please, try again.'));
+        return null;
+    }
 }
 
 }

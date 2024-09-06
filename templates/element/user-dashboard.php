@@ -9,6 +9,7 @@
                 <?= $this->Html->link('Submit Directory Listing', ['controller' => 'Selectdirectory', 'action' => 'index'], ['class' => 'list-group-item list-group-item-action']) ?>
                 <?= $this->Html->link('Submit Law Article', ['controller' => 'Myaccount', 'action' => 'submitlawarticle'], ['class' => 'list-group-item list-group-item-action']) ?>
                 <?= $this->Html->link('View/Edit Law Article', ['controller' => 'Myaccount', 'action' => 'myArticles'], ['class' => 'list-group-item list-group-item-action']) ?>
+                <?= $this->Html->link('My Listings', ['controller' => 'Myaccount', 'action' => 'myListings'], ['class' => 'list-group-item list-group-item-action']) ?>
                 <a href="#" class="list-group-item list-group-item-action">View Transactions</a>
                 <a href="#" class="list-group-item list-group-item-action">Change Password</a>
                 <?= $this->Html->link('Logout', ['controller' => 'login', 'action' => 'logout'], ['class' => 'list-group-item list-group-item-action']) ?>

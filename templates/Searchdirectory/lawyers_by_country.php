@@ -17,7 +17,7 @@
       <meta name="author" content="" />
       <link rel="shortcut icon" href="images/favicon.png" type="">
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" integrity="sha384-4LISF5TTJX/fLmGSxO53rV4miRxdg84mZsxmO8Rx5jGtp/LbrixFETvWa5a6sESd" crossorigin="anonymous">
-      <title>Famms - Fashion HTML Template</title>
+      <title>Lawyer At <?= h($countryName) ?> - Global Law Directory</title>
       <!-- bootstrap core css -->
       <?= $this->Html->css(['bootstrap.css', 'font-awesome.min.css', 'style.css', 'responsive.css']) ?>
    </head>
@@ -36,7 +36,7 @@
                            <div class="col-md-7 col-lg-12 ">
                               <div class = "d-flex justify-content-center">
                                  <h1>
-                                    Lawyers in India
+                                 <p class = "text-uppercase text-white">Lawyer At <?= h($countryName) ?></p>
                                  </h1>
                               </div>
                            </div>
@@ -53,27 +53,33 @@
         <div class="row">
             <!-- Filter Section -->
             <div class="col-md-3">
-                <div class="card">
-                    <div class="card-header">
-                        <h5>Filter</h5>
-                    </div>
-                    <div class="card-body">
-                        <?= $this->Form->create(null, ['type' => 'get']) ?>
-                        <div class="form-group">
-                            <label for="category">Select a Practice Area</label>
-
-                        </div>
-                        <?= $this->Form->submit('Apply Filter', ['class' => 'btn btn-primary btn-block mt-3']) ?>
-                        <?= $this->Form->end() ?>
-                    </div>
-                </div>
+    <div class="card">
+        <div class="card-header">
+            <h5>Filter</h5>
+        </div>
+        <div class="card-body">
+            <?= $this->Form->create(null, ['type' => 'get']) ?>
+            <div class="form-group">
+                <label for="category">Select a Practice Area</label>
+                <?= $this->Form->control('practice_area', [
+                    'type' => 'select',
+                    'options' => $practiceAreasList, // Assuming you pass this from the controller
+                    'empty' => 'All Practice Areas',
+                    'class' => 'form-control'
+                ]) ?>
             </div>
+            <?= $this->Form->submit('Apply Filter', ['class' => 'btn btn-primary btn-block mt-3']) ?>
+            <?= $this->Form->end() ?>
+        </div>
+    </div>
+</div>
+
 
             <!-- Articles Section -->
             <div class="col-md-9">
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h5>Found Results</h5>
-                    <div>
+                <h5>Found <?= h($totalResults ?? 0) ?> Results</h5>
+                <div>
                         <?= $this->Form->create(null, ['type' => 'get', 'class' => 'd-inline-block']) ?>
                         <label for="entries">Show</label>
                         <?= $this->Form->select('entries', [10 => '10', 20 => '20', 50 => '50'], ['default' => 20, 'class' => 'form-control d-inline-block', 'id' => 'entries', 'style' => 'width: auto;']) ?>
@@ -97,8 +103,8 @@
                                     </div>
                                     <div class="listing-info">
                                         <h3>
-                                            <?= $this->Html->link(h($lawyer->law_firm), ['action' => 'view', $lawyer->id]) ?>
-                                            <?= $this->Html->link(h($lawyer->firstname . ' ' . $lawyer->lastname), ['action' => 'view', $lawyer->id]) ?>
+                                            <?= $this->Html->link(h($lawyer->law_firm), ['action' => 'viewLawyerProfile', $lawyer->id]) ?>
+                                            <?= $this->Html->link(h($lawyer->firstname . ' ' . $lawyer->lastname), ['action' => 'viewLawyerProfile', $lawyer->id]) ?>
                                         </h3>
                                         <div class="fs-6 mt-2"><i class="bi bi-map mx-2"></i><?= h($lawyer->city_name) ?>, <?= h($lawyer->state_name) ?></div>
                                         <div class="fs-6"><i class="bi bi-geo-alt-fill mx-2"></i><?= h($lawyer->country_name) ?></div>
@@ -115,9 +121,8 @@
         </div>
                 </div>
     <!-- Footer -->
-    <div class="cpy_">
-        <p class="mx-auto">© 2024 All Rights Reserved By Your Company</p>
-    </div>
+    <?= $this->element('footer') ?>
+
 </body></html>
 
 

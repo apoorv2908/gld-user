@@ -40,6 +40,11 @@ class LawArticlesTable extends Table
         $this->setTable('law_articles');
         $this->setDisplayField('article_title');
         $this->setPrimaryKey('id');
+
+        $this->belongsTo('Users', [
+            'foreignKey' => 'user_id',
+            'joinType' => 'INNER',
+        ]);
     }
 
     /**
@@ -56,16 +61,8 @@ class LawArticlesTable extends Table
             ->requirePresence('article_title', 'create')
             ->notEmptyString('article_title');
 
-
-        $validator
-            ->scalar('user_id')
-            ->maxLength('user_id', 255)
-            ->requirePresence('user_id', 'create')
-            ->notEmptyString('user_id');
-
         $validator
             ->scalar('article_body')
-            ->maxLength('article_body', 255)
             ->requirePresence('article_body', 'create')
             ->notEmptyString('article_body');
 
@@ -81,6 +78,11 @@ class LawArticlesTable extends Table
             ->notEmptyDate('added_on');
 
         $validator
+            ->scalar('user_id')
+            ->maxLength('user_id', 255)
+            ->notEmptyString('user_id');
+
+        $validator
             ->scalar('category')
             ->maxLength('category', 255)
             ->requirePresence('category', 'create')
@@ -91,10 +93,23 @@ class LawArticlesTable extends Table
             ->notEmptyString('status');
 
         $validator
-            ->scalar('views')
-            ->maxLength('views', 50)
+            ->integer('views')
             ->allowEmptyString('views');
 
         return $validator;
+    }
+
+    /**
+     * Returns a rules checker object that will be used for validating
+     * application integrity.
+     *
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
+     */
+    public function buildRules(RulesChecker $rules): RulesChecker
+    {
+        $rules->add($rules->existsIn('user_id', 'Users'), ['errorField' => 'user_id']);
+
+        return $rules;
     }
 }

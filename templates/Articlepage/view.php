@@ -11,6 +11,8 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <link rel="shortcut icon" href="images/favicon.png" type="">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" integrity="sha384-4LISF5TTJX/fLmGSxO53rV4miRxdg84mZsxmO8Rx5jGtp/LbrixFETvWa5a6sESd" crossorigin="anonymous">
+
     <title>Famms - Fashion HTML Template</title>
     <!-- bootstrap core css -->
     <?= $this->Html->css(['bootstrap.css', 'font-awesome.min.css', 'style.css', 'responsive.css']) ?>
@@ -49,24 +51,27 @@
             <!-- Article Detail Section -->
             <div class="col-md-12">
                 <div class="article bg-light mt-3 p-2" style="border-radius: 10px;">
-                    <h3 class="text-primary"><?= h($lawarticles->article_title) ?></h3>
-                    <p>
-                        <strong>Added By:</strong> <?= h($lawarticles->added_by) ?><br>
-                        <strong>Category:</strong> <?= h($lawarticles->category) ?><br>
-                        <strong>Article Id:</strong> <?= h($lawarticles->id) ?><br>
-                        <strong>Added On:</strong> <?= h($lawarticles->added_on) ?><br>
-                        <strong>Views:</strong> <?= h($lawarticles->views) ?>
+                    <h3 class="text-dark mt-2"><?= h($lawarticles->article_title) ?></h3>
+                    <hr>
+                    <p class="text-secondary">
+                        <i class="bi bi-person-fill"></i> Added By: <?= h($lawarticles->added_by) ?><span class ="mx-5"></span>
+                        <i class="bi bi-tags-fill "></i> Category: <?= h($lawarticles->category) ?><span class ="mx-5"></span>
+                        <i class="bi bi-hash "></i> Article ID: <?= h($lawarticles->id) ?><span class ="mx-5"></span>
+                        <i class="bi bi-calendar "></i> Added On: <?= h($lawarticles->added_on) ?><span class ="mx-5"></span>
+                        <i class="bi bi-eye-fill"></i> Views: <?= h($lawarticles->views) ?><span class ="mx-5"></span>
                     </p>
                     <hr>
-                    <p><?= h($lawarticles->article_body) ?></p>
+                    <div>
+                    <?= $lawarticles->article_body ?>
+
+</div>
                 </div>
             </div>
         </div>
     </div>
     <!-- Footer -->
-    <div class="cpy_">
-        <p class="mx-auto">© 2021 All Rights Reserved By <a href="https://html.design/">Free Html Templates</a><br>Distributed By <a href="https://themewagon.com/" target="_blank">ThemeWagon</a></p>
-    </div>
+    <?= $this->element('footer') ?>
+
     <?= $this->Html->script(['jquery-3.4.1.min.js', 'popper.min.js', 'bootstrap.js', 'custom.js' ]) ?>
 </body>
 </html>

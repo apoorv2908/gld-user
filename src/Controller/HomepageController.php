@@ -18,68 +18,87 @@ class HomepageController extends AppController
     public function index()
     {
         $this->loadModel('Practicearea');
+        $this->loadModel('Countries');
+        $this->loadModel('Listings');
+        $this->loadModel('LawArticles'); // Assuming Articles model is available
 
-    // Fetch the practice areas from the database
-    $practicearea = $this->Practicearea->find('all');
+        // Fetch practice areas
+        $practiceareas = $this->Practicearea->find('list', [
+            'keyField' => 'sno',
+            'valueField' => 'practice_area_title'
+        ])->toArray();
 
-    // Pass the data to the view
-    $this->set(compact('practicearea'));
+        $practiceareas2 = $this->Practicearea->find('all');
+
+        
+        // Fetch countries
+        $countries = $this->Countries->find('list', [
+            'keyField' => 'id',
+            'valueField' => 'name'
+        ])->toArray();
+    
+        // Initialize listings
 
 
-    $this->loadModel('Category');
+        $listings = [];
 
-    // Fetch the practice areas from the database
-    $category = $this->Category->find('all');
 
-    // Pass the data to the view
-    $this->set(compact('category'));
+        // Handle form submission for filtering
+        if ($this->request->is('get') && !empty($this->request->getQuery('practice_area_id')) && !empty($this->request->getQuery('country_id'))) {
+            $practiceAreaId = $this->request->getQuery('practice_area_id');
+            $countryId = $this->request->getQuery('country_id');
+    
+            // Fetch filtered listings based on selected practice area and country
+            $listings = $this->Listings->find('all', [
+                'conditions' => [
+                    'Listings.practice_area_id' => $practiceAreaId,
+                    'Listings.country_id' => $countryId,
+                    'Listings.status' => 1 // Assuming 1 is for approved listings
+                ]
+            ])->toArray();
 
-    $this->loadModel('Listings');
 
-    // Fetch the practice areas from the database
-    $listings = $this->Listings->find('all');
 
-    // Pass the data to the view
-    $this->set(compact('listings'));
+        }
 
-    $this->loadModel('Listings');
+        
+    
+$totalResults = count($listings);
 
+        // Fetch approved listings
         $approvedListings = $this->Listings->find('all', [
             'conditions' => ['Listings.status' => 1]
         ])->toArray();
 
-        $this->set(compact('approvedListings'));
-    
-        $this->loadModel('LawArticles');
-
+        // Fetch approved articles
         $approvedArticles = $this->LawArticles->find('all', [
             'conditions' => ['LawArticles.status' => 1]
         ])->toArray();
 
-        $this->set(compact('approvedArticles')); }
+        // Pass data to the view
+        $this->set(compact('practiceareas', 'totalResults', 'practiceareas2', 'countries', 'listings', 'totalResults', 'approvedListings', 'approvedArticles'));
+    }
 
-    
-
-    
-
-    /**
-     * View method
-     *
-     * @param string|null $id Homepage id.
-     * @return \Cake\Http\Response|null|void Renders view
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function view($id = null)
+    public function view($id)
     {
-        $this->loadModel('ListingsData');
+        // This method can fetch data based on the ID provided
 
-        $approvedListings = $this->ListingsData->find('all', [
-            'conditions' => ['ListingsData.status' => 1]
-        ])->toArray();
+        $this->loadModel('Listings');
 
-        $this->set(compact('approvedListings'));
+        $listing = $this->Listings->get($id, ['contain' => []]);
 
+        $this->set(compact('listing'));
+    }
 
+    public function viewLawArticle($id)
+    {
+        // This method can fetch data based on the ID provided
+
+        $this->loadModel('LawArticles');
+
+        $lawarticles = $this->LawArticles->get($id, ['contain' => []]);
+
+        $this->set(compact('lawarticles'));
     }
 
     /**

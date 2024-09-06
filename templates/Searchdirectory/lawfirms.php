@@ -21,14 +21,16 @@
     <!-- Banner -->
     <div class="container my-5">
     <h2 class="text-center mb-4">Select a Country</h2>
-    <div class="alphabet-nav text-center mb-4">
+    <div class=" text-center mb-4">
         <?php foreach (range('A', 'Z') as $letter): ?>
             <a href="#<?= $letter ?>" class="btn btn-outline-primary btn-sm mx-1"><?= $letter ?></a>
         <?php endforeach; ?>
     </div>
 
+    <hr>
+
     <?php foreach ($groupedCountries as $letter => $countries): ?>
-        <div id="<?= $letter ?>" class="country-section mb-5">
+        <div id="<?= $letter ?>" class="country-section mb-5 bg-light p-3">
             <h3 class="text-primary"><?= $letter ?></h3>
             <div class="row">
                 <?php foreach ($countries as $country): ?>

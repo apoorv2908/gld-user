@@ -63,26 +63,24 @@
                 <hr>
                 <div class="mt-4 px-4">
                     <p>
-                        Name:                 <?= h($loggedInUser->firstname) ?>  <?= h($loggedInUser->lastname) ?>
+                       <b> Name:     </b>            <?= h($loggedInUser->firstname) ?>  <?= h($loggedInUser->lastname) ?>
 
 
 </p>
                     
 <br>
                     <p >
-                        Email:                 <?= h($loggedInUser->email) ?>
+                      <b>  Email:  </b>               <?= h($loggedInUser->email) ?>
 
 </p>
 <br>
                     <p>
-                        User Id:                 <?= h($loggedInUser->id) ?>
+                      <b>  User Id:      </b>           <?= h($loggedInUser->id) ?>
 
 </p>
                    
              <br>      
                 </div>
-                <?= $this->Html->link('Edit Details', ['action' => 'edit', $loggedInUser->id], ['class' => 'btn btn-primary']) ?>
-
             </div>
 
 
@@ -105,9 +103,8 @@
         </div>
     </div>
     <!-- Footer -->
-    <div class="cpy_">
-        <p class="mx-auto">© 2021 All Rights Reserved By <a href="https://html.design/">Free Html Templates</a><br>Distributed By <a href="https://themewagon.com/" target="_blank">ThemeWagon</a></p>
-    </div>
+    <?= $this->element('footer') ?>
+
     <?= $this->Html->script(['jquery-3.4.1.min.js', 'popper.min.js', 'bootstrap.js', 'custom.js']) ?>
 </body>
 </html>

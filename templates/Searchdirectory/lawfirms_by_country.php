@@ -35,8 +35,8 @@
                         <div class="row">
                            <div class="col-md-7 col-lg-12 ">
                               <div class = "d-flex justify-content-center">
-                                 <h1>
-                                    Lawyers in India
+                                 <h1 class = "fw-bold text-white">
+                                    Law Firms in <?= h($countryName) ?>
                                  </h1>
                               </div>
                            </div>
@@ -72,8 +72,8 @@
             <!-- Articles Section -->
             <div class="col-md-9">
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h5>Found Results</h5>
-                    <div>
+                <h5>Found <?= h($totalResults) ?> Results</h5>
+                <div>
                         <?= $this->Form->create(null, ['type' => 'get', 'class' => 'd-inline-block']) ?>
                         <label for="entries">Show</label>
                         <?= $this->Form->select('entries', [10 => '10', 20 => '20', 50 => '50'], ['default' => 20, 'class' => 'form-control d-inline-block', 'id' => 'entries', 'style' => 'width: auto;']) ?>
@@ -103,7 +103,7 @@
                                     </div>
                                     <div class="listing-type">
                                         <p><?= h($lawfirm->listing_type) ?></p>
-                                        <?= $this->Html->link('View Listing', ['action' => 'viewLawyerProfile', $lawfirm->id], ['class' => 'view-listing-button']) ?>
+                                        <?= $this->Html->link('View Listing', ['action' => 'viewLawfirmProfile', $lawfirm->id], ['class' => 'view-listing-button']) ?>
                                     </div>
                 </div>
                 <?php endforeach; ?>
