@@ -48,34 +48,61 @@ class GldController extends AppController
 
     public function contactus()
     {
-        // Load the Contactus model
-        $this->loadModel('Contactus');
-        
-        // Create a new entity
-        $contactus = $this->Contactus->newEmptyEntity();
-        
+        $this->loadModel('ContactUs');
+    
+        if (!$this->request->getSession()->read('captcha_code')) {
+            $captchaCode = substr(str_shuffle('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'), 0, 6);
+            $this->request->getSession()->write('captcha_code', $captchaCode);
+        } else {
+            $captchaCode = $this->request->getSession()->read('captcha_code');
+        }
+    
+        $contactus = $this->ContactUs->newEmptyEntity();
+    
         if ($this->request->is('post')) {
-            // Verify the CAPTCHA input
-            $captchaResult = $this->Captcha->verify($this->request->getData('captcha'));
-            
-            if (!$captchaResult) {
-                $this->Flash->error(__('CAPTCHA verification failed. Please try again.'));
-            } else {
-                // Patch the entity with form data
-                $contactus = $this->Contactus->patchEntity($contactus, $this->request->getData());
-                
-                if ($this->Contactus->save($contactus)) {
-                    $this->Flash->success(__('Your message has been sent successfully.'));
-                    
-                    return $this->redirect(['action' => 'contact']);
+            \Cake\Log\Log::write('debug', 'Request Data: ' . json_encode($this->request->getData()));
+
+    
+            $storedCaptcha = $this->request->getSession()->read('captcha_code');
+            $inputCaptcha = $this->request->getData('captcha');
+    
+            if ($inputCaptcha === $storedCaptcha) {
+                $contactus = $this->ContactUs->patchEntity($contactus, $this->request->getData());
+                \Cake\Log\Log::write('debug', 'User Entity: ' . json_encode($contactus));
+
+    
+                if ($this->ContactUs->save($contactus)) {
+                    $this->Flash->success(__('Registration successful!'));
+    
+                    // Attempt to send the email
+                    //try {
+                       // $mailer = new Mailer('default');
+                       // $mailer->setFrom(['test@unitedlawhouse.com' => 'United Law House'])
+                            //->setTo($contactus->email)
+                            //->setSubject('Welcome to Our Website')
+                            //->deliver('Hello ' . $contactus->firstname . ', thank you for registering with us!');
+    
+                        //$this->Flash->success(__('Registration successful! A confirmation email has been sent to your email address.'));
+    
+                   // } catch (MailerException $e) {
+                     //   \Cake\Log\Log::error('Email sending failed: ' . $e->getMessage());
+                    //    $this->Flash->error(__('Registration was successful, but we couldn’t send a confirmation email.'));
+                   // }
+    
+                    $this->request->getSession()->delete('captcha_code');
+                    return $this->redirect(['action' => 'contactus']);
+                } else {
+                    \Cake\Log\Log::write('debug', 'Validation Errors: ' . json_encode($contactus->getErrors()));
+                    $this->Flash->error(__('Registration failed. Please try again.'));
                 }
-                $this->Flash->error(__('Unable to send your message. Please, try again.'));
+            } else {
+                $this->Flash->error(__('Invalid CAPTCHA code.'));
             }
         }
-        
-        // Pass the entity to the view
-        $this->set(compact('contactus'));
+    
+        $this->set(compact('contactus', 'captchaCode'));
     }
+
 
 
     public function faq(){

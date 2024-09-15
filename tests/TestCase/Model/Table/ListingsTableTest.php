@@ -25,7 +25,12 @@ class ListingsTableTest extends TestCase
      */
     protected $fixtures = [
         'app.Listings',
+        'app.Users',
+        'app.Countries',
+        'app.States',
+        'app.Cities',
         'app.ListingsData',
+        'app.Orders',
     ];
 
     /**
@@ -59,6 +64,17 @@ class ListingsTableTest extends TestCase
      * @uses \App\Model\Table\ListingsTable::validationDefault()
      */
     public function testValidationDefault(): void
+    {
+        $this->markTestIncomplete('Not implemented yet.');
+    }
+
+    /**
+     * Test buildRules method
+     *
+     * @return void
+     * @uses \App\Model\Table\ListingsTable::buildRules()
+     */
+    public function testBuildRules(): void
     {
         $this->markTestIncomplete('Not implemented yet.');
     }

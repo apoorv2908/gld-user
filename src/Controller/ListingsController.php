@@ -136,10 +136,10 @@ class ListingsController extends AppController
     // Fetch logged-in user's details
     $user = $this->Authentication->getIdentity();
 
-    $userRecord = $this->Users->get($user->id);
-    if ($userRecord->has_user_paid == 0) {
-        return $this->redirect(['controller' => 'Subscription', 'action' => 'add']);
-    }
+    //$userRecord = $this->Users->get($user->id);
+    //if ($userRecord->has_user_paid == 0) {
+     //   return $this->redirect(['controller' => 'Subscription', 'action' => 'add']);
+    //}
 
     // Pass the data to the view
     $this->set(compact('practicearea', 'countries', 'user'));
@@ -226,7 +226,7 @@ class ListingsController extends AppController
         // Save the entity
         if ($this->Listings->save($listing)) {
             $this->Flash->success(__('The listing has been saved.'));
-            return $this->redirect(['controller' => 'Selectdirectory', 'action' => 'index']);
+            return $this->redirect(['controller' => 'Listings', 'action' => 'confirmation',  $listing->listing_id]);
         } else {
             $this->Flash->error(__('The listing could not be saved. Please, try again.'));
         }
@@ -237,7 +237,7 @@ class ListingsController extends AppController
 }
 
     
-    
+
 public function directoryOfLawFirms()
 {
 
@@ -255,10 +255,10 @@ public function directoryOfLawFirms()
     // Fetch logged-in user's details
     $user = $this->Authentication->getIdentity();
 
-    $userRecord = $this->Users->get($user->id);
-    if ($userRecord->has_user_paid == 0) {
-        return $this->redirect(['controller' => 'Subscription', 'action' => 'add']);
-    }
+   // $userRecord = $this->Users->get($user->id);
+   // if ($userRecord->has_user_paid = 0) {
+    //    return $this->redirect(['controller' => 'Subscription', 'action' => 'add']);
+    //}
 
     // Pass the data to the view
     $this->set(compact('practicearea', 'countries', 'user'));
@@ -348,7 +348,7 @@ public function directoryOfLawFirms()
         // Save the entity
         if ($this->Listings->save($listing)) {
             $this->Flash->success(__('The listing has been saved.'));
-            return $this->redirect(['controller' => 'Selectdirectory', 'action' => 'index']);
+            return $this->redirect(['controller' => 'Listings', 'action' => 'confirmation',  $listing->listing_id]);
         } else {
             $errors = $listing->getErrors();
             Log::debug('Listing save errors: ' . json_encode($errors));
@@ -361,7 +361,6 @@ public function directoryOfLawFirms()
     $this->render('directory_of_law_firms');
 
 }
-
 
 public function ourSubscriptionPlan()
 {
@@ -410,5 +409,102 @@ protected function createOrder()
         return null;
     }
 }
+
+public function mysearch()
+{
+    $this->loadModel('Practicearea');
+    $this->loadModel('Countries');
+    $this->loadModel('Listings');
+
+    // Fetch practice areas and countries for dropdowns
+    $practiceareas = $this->Practicearea->find('list', [
+        'keyField' => 'sno',
+        'valueField' => 'practice_area_title'
+    ])->toArray();
+
+    $countries = $this->Countries->find('list', [
+        'keyField' => 'id',
+        'valueField' => 'name'
+    ])->toArray();
+
+    // Initialize filtered listings, total results, country name, and practice area name
+    $listings = [];
+    $totalResults = 0;
+    $countryName = '';
+    $practiceAreaName = '';
+
+    // Handle filtering based on dropdown selections
+    if ($this->request->is('get') && !empty($this->request->getQuery('practice_area_id')) && !empty($this->request->getQuery('country_id'))) {
+        $practiceAreaId = $this->request->getQuery('practice_area_id');
+        $countryId = $this->request->getQuery('country_id');
+
+        // Fetch the selected country name
+        $country = $this->Countries->get($countryId);
+        $countryName = $country->name;
+
+        // Fetch the selected practice area name
+        $practiceArea = $this->Practicearea->get($practiceAreaId);
+        $practiceAreaName = $practiceArea->practice_area_title;
+
+        // Fetch listings based on selected practice area and country
+        $listings = $this->Listings->find('all', [
+            'conditions' => [
+                // Use LIKE to match the practice area in the comma-separated string
+                'Listings.practice_area LIKE' => '%' . $practiceAreaId . '%',
+                'Listings.country' => $countryId,
+                'Listings.status' => 1 // Assuming status 1 means approved listings
+            ]
+        ])->toArray();
+
+        // Calculate total number of filtered listings
+        $totalResults = count($listings);
+    }
+
+    // Pass the filtered listings, dropdown options, country name, practice area name, and total results to the view
+    $this->set(compact('practiceareas', 'countries', 'listings', 'totalResults', 'countryName', 'practiceAreaName'));
+}
+
+
+public function getPracticeAreas()
+{
+    $this->request->allowMethod('ajax');
+    
+    $countryId = $this->request->getQuery('country_id');
+    
+    // Fetch practice areas based on the country (if needed)
+    $practiceareas = $this->Practicearea->find('list', [
+        'keyField' => 'sno',
+        'valueField' => 'practice_area_title',
+        'conditions' => ['country_id' => $countryId] // Adjust this condition as necessary
+    ])->toArray();
+
+    $this->set('practiceareas', $practiceareas);
+    $this->set('_serialize', ['practiceareas']);
+}
+
+public function confirmation($listing_id = null)
+{
+    // Check if the listing_id is provided
+    if ($listing_id) {
+        // Fetch the listing based on listing_id
+        $listing = $this->Listings->find('all', [
+            'conditions' => ['listing_id' => $listing_id]
+        ])->first();
+
+        // Check if the listing exists
+        if ($listing) {
+            // Pass the listing data to the view
+            $this->set(compact('listing'));
+        } else {
+            $this->Flash->error(__('The listing could not be found.'));
+            return $this->redirect(['action' => 'directoryOfLawyers']);
+        }
+    } else {
+        $this->Flash->error(__('No listing ID provided.'));
+        return $this->redirect(['action' => 'directoryOfLawyers']);
+    }
+}
+
+
 
 }

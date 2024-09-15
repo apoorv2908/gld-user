@@ -24,38 +24,27 @@
    <body>
     <!-- Header -->
     <?= $this->element('header') ?>
-    <section class="slider_section ">
-            <div class="slider_bg_box">
-            <?= $this->Html->image('map.jpg') ?>            
+   
+
+         <div class="section mt-0 ">
+         <div class=" py-5 breadcrumbs-wrap apt-60 apb-60 apt-40-sm apb-40-sm" style="background: linear-gradient(rgba(51, 104, 198,0.3),rgba(51, 104, 198,0.8)),url(../img/map.jpg) center/cover no-repeat; ">
+      <div class="text-center">
+        <div class="breadcrumbs">
+          <h1 class="font36 text-white font30-sm fw-bold text-uppercase"> <span id="Headername1">                                    Listings in <?= h($practiceAreaTitle) ?>
+          </span></h1>
         </div>
-            <div id="customCarousel1" class="carousel slide" data-ride="carousel">
-               <div class="carousel-inner">
-                  <div class="carousel-item active">
-                     <div class="container ">
-                        <div class="row">
-                           <div class="col-md-7 col-lg-12 ">
-                              <div class = "d-flex justify-content-center">
-                                 <h1 class = "fw-bold text-white text-uppercase">
-                                    Listings in <?= h($practiceAreaTitle) ?>
-                                 </h1>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-              
-            </div>
-         </section>
+      </div>
+    </div>
 
     <!-- Content Section -->
-    <div class="m-3">
+    <div class="m-3 mb-5">
 
         <div class="row">
             <!-- Filter Section -->
             <div class="col-md-3">
                 <div class="card">
-                    <div class="card-header">
-                        <h5>Filter</h5>
+                    <div class="card-header sam">
+                        <h5 class = "text-white">FILTER</h5>
                     </div>
                     <div class="card-body">
                         <?= $this->Form->create(null, ['type' => 'get']) ?>
@@ -94,17 +83,22 @@
                                         <img src="<?= $this->Url->image($listing->image) ?>" alt="<?= h($listing->law_firm) ?>">
                                     </div>
                                     <div class="listing-info">
-                                        <h3>
-                                            <?= $this->Html->link(h($listing->law_firm), ['action' => 'viewListingsByPracticeareas', $listing->id]) ?>
-                                            <?= $this->Html->link(h($listing->firstname . ' ' . $listing->lastname), ['action' => 'viewListingsByPracticeareas', $listing->id]) ?>
-                                        </h3>
+                                      
+        <?php if ($listing->listing_type === 'Lawyer'): ?>
+         <h3><?= h($listing->firstname) . ' ' . h($listing->lastname) ?></h3>
+      <?php elseif ($listing->listing_type === 'Law Firm'): ?>
+         <h3><?= h($listing->law_firm) ?></h3>
+      <?php endif; ?>
                                         <div class="fs-6 mt-2"><i class="bi bi-map mx-2"></i><?= h($listing->city_name) ?>, <?= h($listing->state_name) ?></div>
                                         <div class="fs-6"><i class="bi bi-geo-alt-fill mx-2"></i><?= h($listing->country_name) ?></div>
                                     </div>
                                     <div class="listing-type">
                                         <p><?= h($listing->listing_type) ?></p>
-                                        <?= $this->Html->link('View Listing', ['action' => 'viewListingsByPracticeareas', $listing->id], ['class' => 'view-listing-button']) ?>
-                                    </div>
+                                        <?php if ($listing->listing_type === 'Lawyer'): ?>
+        <?= $this->Html->link('View Listing', ['controller' => 'Searchdirectory', 'action' => 'viewLawyerProfile', $listing->id], ['class' => 'view-listing-button btn btn-secondary']) ?>
+    <?php elseif ($listing->listing_type === 'Law Firm'): ?>
+        <?= $this->Html->link('View Listing', ['controller' => 'Searchdirectory','action' => 'viewLawfirmProfile', $listing->id], ['class' => 'view-listing-button btn btn-secondary']) ?>
+    <?php endif; ?>                                    </div>
                 </div>
                 <?php endforeach; ?>
 

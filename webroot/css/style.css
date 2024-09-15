@@ -1,10 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Reddit+Sans+Condensed:wght@200..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Mukta:wght@200;300;400;500;600;700;800&display=swap');
 
 * {
   box-sizing: border-box;
 }
 body {
-  font-family: "Reddit Sans Condensed", sans-serif;
+  font-family: "Mukta";
   color: #0c0c0c;
   background-color: #ffffff;
   overflow-x: hidden;
@@ -18,6 +18,9 @@ li:hover{
   cursor: pointer;
 }
 
+.listing-type-2{
+  margin-left: 685px;
+}
 
 .layout_padding2 {
   padding: 75px 0;
@@ -177,9 +180,7 @@ a:focus {
 }
 
 
-.navbar-brand {
-  font-family: 'Playfair Display', serif;
-}
+
 
 .navbar-brand span {
   font-weight: bold;
@@ -326,9 +327,7 @@ a:focus {
     line-height: 70px;
 }
 
-.slider_section .detail-box h1 span {
-  color: #f7444e;
-}
+
 
 .slider_section .detail-box p {
     font-size: 16px;
@@ -338,7 +337,6 @@ a:focus {
 
 .slider_section .detail-box a {
     display: inline-block;
-    padding: 12px 45px;
     background-color: #f7444e;
     border: 1px solid #f7444e;
     color: #ffffff;
@@ -347,6 +345,7 @@ a:focus {
     transition: all 0.3s;
     margin-top: 10px;
     font-weight: 700;
+    text-transform: uppercase;
 }
 
 .slider_section .detail-box a:hover {
@@ -356,6 +355,11 @@ a:focus {
 
 .slider_section .img-box img {
   width: 100%;
+}
+
+.naka{
+  height: 70px;
+  width: 70px;
 }
 
 .slider_section .carousel-indicators {
@@ -894,7 +898,6 @@ a:focus {
 .footer_section .footer-logo {
   font-weight: 600;
   margin-bottom: 20px;
-  font-family: 'Playfair Display', serif;
   text-align: left;
 }
 
@@ -1012,7 +1015,6 @@ a:focus {
     margin-bottom: 15px;
     font-size: 2.5rem;
     font-weight: bold;
-    font-family: 'Inter';
   }
 
 li.nav-item ul {
@@ -1152,6 +1154,27 @@ form input {
     line-height: normal;
 }
 
+.mana{
+  text-transform: capitalize;
+
+}
+
+.guglu{
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.centered-image {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 100px;
+  width: 10%; /* Adjust width as needed */
+  max-width: 50%; /* Ensures it doesn't exceed the container's width */
+  height: auto; /* Maintains the aspect ratio */
+}
+
+
 form textarea {
     background: #fff;
     border: solid #ccc 1px;
@@ -1163,6 +1186,8 @@ form textarea {
     text-transform: capitalize;
     line-height: normal;
 }
+
+
 
 .at-1{
   font-size: small;
@@ -1180,6 +1205,28 @@ form textarea {
   font-size: small;
 }
 
+.renu{
+  border-bottom: 5px solid orange;
+}
+
+.toast-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+}
+
+.toast {
+  background-color: #5cb85c;
+  color: white;
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.sam{
+  background-color: #165fa2;
+}
 
 .cl-3{
   background-color: #165fa2;
@@ -1194,15 +1241,19 @@ form input[type="submit"] {
     line-height: normal;
     margin: 0 auto;
     display: flex;
-    background: #333;
+    background-color: #165fa2;
     color: #fff;
     font-weight: 600;
     transition: ease all 0.1s;
 }
 
+.captcha-code{
+  font-weight: bold;
+  font-size: 30px;
+}
 form input[type="submit"]:hover,
 form input[type="submit"]:focus {
-    background: #f7444e;
+  background-color: #157efb;
     color: #fff;
 }
 
@@ -1243,8 +1294,10 @@ form input[type="submit"]:focus {
   align-items: center;
   margin-bottom: 20px;
   padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  border: 1px solid white;
+  background-color: white;
+  box-shadow: 2px 2px 5px rgb(216, 215, 215);
+  cursor: pointer;
 }
 
 .ci{

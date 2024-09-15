@@ -3,75 +3,69 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use Cake\Controller\Controller;
-use Cake\Log\Log;
+use PayPal\Api\Payer;
+use PayPal\Api\Amount;
+use PayPal\Api\Transaction;
+use PayPal\Api\Payment;
+use PayPal\Api\RedirectUrls;
+use Cake\Routing\Router;
 
-class PaymentsController extends Controller
+
+class PaymentsController extends AppController
 {
     public function initialize(): void
     {
         parent::initialize();
-        $this->loadComponent('MyPayPal'); // Load your custom PayPal component
-        $this->loadModel('Subscription'); // Load the Subscription model
+        $this->loadModel('Orders'); // Assuming you have an Orders model
+        $this->apiContext = new \PayPal\Rest\ApiContext(
+            new \PayPal\Auth\OAuthTokenCredential(
+                'AYXkibOYEdd1NuOrzkqYvPIJNFFe5iQCjqfzUQOn4Dvx_aRdx0F2xtxTgOsYI7NXFAxMscfOODXWtPLc',
+                'EEUZVmqKRDYI9rrTnx0KeJpCFoO1BPjznHM7kHVWNSjWdMdh8xVW6CubBTw33KyoATXfHR01UU-s0iVW'
+            )
+        );
     }
 
-    public function accessPayment($orderId)
+    // src/Controller/PaymentsController.php
+
+    public function createSession()
     {
-        // Retrieve the subscription details
-        $subscription = $this->Subscription->get($orderId);
-
-        // Define payment details
-        $amount = (float)$subscription->amt; // Ensure the amount is a float
-        $description = 'Order #' . $orderId;
-
-        // Create a payment and get approval URL
-        $approvalUrl = $this->MyPayPal->createPayment($amount, $description, $orderId);
-
-        // Redirect to PayPal for payment
-        return $this->redirect($approvalUrl);
+        $amount = 100.00; // Amount in USD
+        $orderName = 'Order #12345';
+        
+        $paypalLink = $this->createPayPalLink($amount, $orderName);
+        
+        // Redirect the user to the PayPal payment link
+        return $this->redirect($paypalLink);
     }
 
-    public function paymentSuccess()
-    {
-        // Retrieve PayPal payment details (e.g., from query parameters)
-        $transactionId = $this->request->getQuery('tx');
-        $orderId = $this->request->getQuery('order_id');
+    private function createPayPalLink($amount, $orderName) {
+        $paypalUrl = "https://www.paypal.com/cgi-bin/webscr";
+        $returnUrl = "https://yourwebsite.com/paypal_success";
+        $cancelUrl = "https://yourwebsite.com/paypal_cancel";
 
-        if ($transactionId && $orderId) {
-            // Update subscription status in the database
-            $subscription = $this->Subscription->get($orderId);
-            $subscription->status = 1; // Set status to paid
-            $subscription->transaction_id = $transactionId; // Save the transaction ID
+        $queryParams = http_build_query([
+            'cmd' => '_xclick',
+            'business' => 'unitedlawhouse@gmail.com',
+            'item_name' => $orderName,
+            'amount' => $amount,
+            'currency_code' => 'USD',
+            'return' => $returnUrl,
+            'cancel_return' => $cancelUrl,
+        ]);
 
-            if ($this->Subscription->save($subscription)) {
-                $this->Flash->success(__('Payment was successful.'));
-
-                // Redirect to the desired page after successful payment
-                return $this->redirect(['action' => 'index']);
-            }
-        }
-
-        // If something goes wrong
-        $this->Flash->error(__('Something went wrong. Please contact support.'));
-        return $this->redirect(['action' => 'index']);
+        return $paypalUrl . '?' . $queryParams;
     }
 
-    public function paymentCancel()
+
+
+    public function paypalSuccess()
     {
-        // Handle the payment cancellation
+        // Handle payment success, similar to your Stripe success method
+    }
+
+    public function paypalCancel()
+    {
         $this->Flash->error(__('Payment was canceled.'));
         return $this->redirect(['action' => 'index']);
-    }
-
-    public function paymentNotify()
-    {
-        // Handle PayPal IPN (Instant Payment Notification)
-        Log::write('info', 'PayPal IPN received');
-        
-        // Here you can validate the IPN message and update your records accordingly
-        $data = $this->request->getData();
-        Log::write('debug', $data);
-
-        // Process the IPN notification (e.g., update order status, log the event)
     }
 }

@@ -59,8 +59,10 @@ class ArticlepageController extends AppController
             'valueField' => 'practice_area_title'
         ])->toArray();
 
+        $totalResults = count($lawarticles);
+
         // Pass data to the view
-        $this->set(compact('lawarticles', 'practiceareas'));
+        $this->set(compact('lawarticles', 'practiceareas', 'totalResults'));
     }
 
     /**

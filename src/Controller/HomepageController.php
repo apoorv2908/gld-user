@@ -30,6 +30,18 @@ class HomepageController extends AppController
 
         $practiceareas2 = $this->Practicearea->find('all');
 
+        $listings2 = $this->Listings->find('all')->toArray();;
+
+        $totalResults = count($listings2);
+
+        $countries2 = $this->Countries->find('all')->toArray();;
+
+        $totalResults2 = count($countries2);
+
+
+
+
+
         
         // Fetch countries
         $countries = $this->Countries->find('list', [
@@ -51,19 +63,20 @@ class HomepageController extends AppController
             // Fetch filtered listings based on selected practice area and country
             $listings = $this->Listings->find('all', [
                 'conditions' => [
-                    'Listings.practice_area_id' => $practiceAreaId,
-                    'Listings.country_id' => $countryId,
+                    'Listings.practice_area' => $practiceAreaId,
+                    'Listings.country' => $countryId,
                     'Listings.status' => 1 // Assuming 1 is for approved listings
                 ]
             ])->toArray();
 
 
 
-        }
+}
 
-        
+
+
+
     
-$totalResults = count($listings);
 
         // Fetch approved listings
         $approvedListings = $this->Listings->find('all', [
@@ -76,8 +89,50 @@ $totalResults = count($listings);
         ])->toArray();
 
         // Pass data to the view
-        $this->set(compact('practiceareas', 'totalResults', 'practiceareas2', 'countries', 'listings', 'totalResults', 'approvedListings', 'approvedArticles'));
+        $this->set(compact('practiceareas', 'totalResults', 'totalResults2', 'practiceareas2', 'countries', 'listings', 'totalResults', 'approvedListings', 'approvedArticles'));
     }
+
+
+    public function mysearch()
+{
+    $this->loadModel('Practicearea');
+    $this->loadModel('Countries');
+    $this->loadModel('Listings');
+
+    // Fetch practice areas and countries for dropdowns
+    $practiceareas = $this->Practicearea->find('list', [
+        'keyField' => 'sno',
+        'valueField' => 'practice_area_title'
+    ])->toArray();
+
+    $countries = $this->Countries->find('list', [
+        'keyField' => 'id',
+        'valueField' => 'name'
+    ])->toArray();
+
+    // Initialize filtered listings
+    $listings = [];
+
+    // Handle filtering based on dropdown selections
+    if ($this->request->is('get') && !empty($this->request->getQuery('practice_area_id')) && !empty($this->request->getQuery('country_id'))) {
+        $practiceAreaId = $this->request->getQuery('practice_area_id');
+        $countryId = $this->request->getQuery('country_id');
+
+        // Fetch listings based on selected practice area and country
+        $listings = $this->Listings->find('all', [
+            'conditions' => [
+                'Listings.practice_area' => $practiceAreaId,
+                'Listings.country' => $countryId,
+                'Listings.status' => 1 // Assuming status 1 means approved listings
+            ]
+        ])->toArray();
+    }
+
+    $totalResults = count($listings);
+
+    // Pass the filtered listings and dropdown options to the view
+    $this->set(compact('practiceareas', 'countries', 'listings', 'totalResults'));
+}
 
     public function view($id)
     {

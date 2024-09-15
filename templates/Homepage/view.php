@@ -58,7 +58,7 @@
       <?php if ($listing->listing_type === 'Lawyer'): ?>
          <h5><?= h($listing->firstname) . ' ' . h($listing->lastname) ?></h5>
       <?php elseif ($listing->listing_type === 'Law Firm'): ?>
-         <h5><?= h($listing->name_of_law_firm) ?></h5>
+         <h5><?= h($listing->law_firm) ?></h5>
       <?php endif; ?>
    </div>
 
@@ -70,7 +70,7 @@
    <p class = "at-1 mx-3"><i class="fa fa-phone mx-1"></i> <?= h($listing->phone) ?></p>
    <p class = "at-1 mx-3"><i class="fa fa-mobile mx-1"></i> <?= h($listing->mobile) ?></p>
    <p class = "at-1 mx-3"><i class="fa fa-globe mx-1"></i> <?= h($listing->website) ?></p><br>
-   <p class="initial-consultation text-success h5"><?= h($listing->initial_consultation ? 'Free Initial Consultation Provided' : 'No Free Initial Consultation Provided') ?></p>
+   <p class="initial-consultation text-success h5"><?= h($listing->free_consultation ? 'Free Initial Consultation Provided' : 'No Free Initial Consultation Provided') ?></p>
 </div>
       </div>
 <div class="listing-map mt-3 ">

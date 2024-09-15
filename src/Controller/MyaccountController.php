@@ -75,8 +75,7 @@ class MyaccountController extends AppController
             // Save the entity
             if ($this->LawArticles->save($lawArticle)) {
                 $this->Flash->success(__('The law article has been saved.'));
-                Log::write('info', 'Law article saved successfully with ID: ' . $lawArticle->id);
-                return $this->redirect(['action' => 'index']); // Redirect to an appropriate page
+                return $this->redirect(['action' => 'confirmation',  $lawArticle->id]); // Redirect to an appropriate page
             } else {
                 // Log the validation errors
                 Log::write('error', 'Law article could not be saved. Errors: ' . json_encode($lawArticle->getErrors()));
@@ -94,11 +93,17 @@ public function myArticles()
 
     // Fetch articles submitted by the logged-in user
     $lawarticles = $this->LawArticles->find('all')
-        ->where(['user_id' => $user->id])
+        ->where(['user_id' => $user->id, 'status' => 1])
         ->toArray();
 
+
+        $lawarticles2 = $this->LawArticles->find('all')
+        ->where(['user_id' => $user->id, 'status' => 0])
+        ->toArray();
+    
+
     // Pass the data to the view
-    $this->set(compact('lawarticles'));
+    $this->set(compact('lawarticles', 'lawarticles2'));
 }
 
     /**
@@ -220,13 +225,41 @@ public function myArticles()
 
         // Fetch listings added by the logged-in user
         $listings = $this->Listings->find('all')
-            ->where(['user_id' => $user->id])
+            ->where(['user_id' => $user->id, 'status' => 1])
+            ->toArray();
+
+            $listings2 = $this->Listings->find('all')
+            ->where(['user_id' => $user->id, 'status' => 0])
             ->toArray();
 
         // Pass the data to the view
-        $this->set(compact('listings'));
+        $this->set(compact('listings' ,'listings2'));
     }
 
+    public function confirmation($id = null)
+{
+    // Check if the listing_id is provided
+    $this->loadModel('LawArticles');
+
+    if ($id) {
+        // Fetch the listing based on listing_id
+        $listing = $this->LawArticles->find('all', [
+            'conditions' => ['id' => $id]
+        ])->first();
+
+        // Check if the listing exists
+        if ($listing) {
+            // Pass the listing data to the view
+            $this->set(compact('listing'));
+        } else {
+            $this->Flash->error(__('The Article could not be found.'));
+            return $this->redirect(['action' => 'submitlawarticle']);
+        }
+    } else {
+        $this->Flash->error(__('No Article ID provided.'));
+        return $this->redirect(['action' => 'submitlawarticle']);
+    }
+}
 
     
 }

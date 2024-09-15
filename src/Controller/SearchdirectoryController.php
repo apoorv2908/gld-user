@@ -95,40 +95,53 @@ class SearchdirectoryController extends AppController
     // Load the required models
     $this->loadModel('Listings');
     $this->loadModel('Countries');
+    $this->loadModel('States');
     $this->loadModel('PracticeArea');
-    
+
     // Fetch all practice areas for the dropdown
     $practiceAreasList = $this->PracticeArea->find('list', [
         'keyField' => 'sno',
         'valueField' => 'practice_area_title',
     ])->toArray();
-    
-    // Fetch the selected practice area from the query
+
+    // Fetch the states for the selected country
+    $statesList = $this->States->find('list', [
+        'keyField' => 'id',
+        'valueField' => 'name',
+        'conditions' => ['States.country_id' => $countryId],
+    ])->toArray();
+
+    // Fetch selected practice area and state from the query
     $selectedPracticeArea = $this->request->getQuery('practice_area');
-    
+    $selectedState = $this->request->getQuery('state');
+
     // Create the base conditions for the query
     $conditions = [
         'Listings.country' => $countryId,
         'Listings.listing_type' => 'Lawyer'
     ];
-    
+
     // If a practice area is selected, add it to the conditions
     if ($selectedPracticeArea) {
-        $conditions['FIND_IN_SET(:practice_area_id, Listings.practice_area)'] = true;
+        $conditions[] = "FIND_IN_SET('$selectedPracticeArea', Listings.practice_area)";
     }
-    
-    // Fetch all law firms for the selected country and practice area
+
+    // If a state is selected, add it to the conditions
+    if ($selectedState) {
+        $conditions['Listings.state'] = $selectedState;
+    }
+
+    // Fetch all lawyers for the selected country and practice area/state
     $lawyers = $this->Listings->find('all', [
-        'conditions' => $conditions,
-        'bind' => ['practice_area_id' => $selectedPracticeArea]
+        'conditions' => $conditions
     ])->toArray();
-    
+
     // Fetch the country name
     $country = $this->Countries->get($countryId);
     $countryName = $country->name;
     $totalResults = count($lawyers);
-    
-    // Process practice areas for each law firm
+
+    // Process practice areas for each lawyer
     foreach ($lawyers as $lawyer) {
         $practiceAreaIds = explode(',', $lawyer->practice_area);
         $practiceAreas = $this->PracticeArea->find('list', [
@@ -138,53 +151,79 @@ class SearchdirectoryController extends AppController
         $lawyer->country_name = $countryName;
         $lawyer->practice_area_name = implode(', ', $practiceAreas);
     }
-    
+
     // Pass data to the view
-    $this->set(compact('lawyers', 'countryName', 'totalResults', 'practiceAreasList', 'selectedPracticeArea'));
+    $this->set(compact('lawyers', 'countryName', 'totalResults', 'practiceAreasList', 'selectedPracticeArea', 'statesList', 'selectedState'));
 }
 
 
-    public function lawfirmsByCountry($countryId)
-    {
-        // Load the required models
-        $this->loadModel('Listings');
-        $this->loadModel('Countries');
-        $this->loadModel('PracticeArea');
-    
-        // Fetch all lawyers for the selected country
-        $lawfirms = $this->Listings->find('all', [
-            'conditions' => [
-                'Listings.country' => $countryId,
-                'Listings.listing_type' => 'Law Firm'
-            ],
-        ])->toArray();
-    
-        // Fetch the country name
-        $country = $this->Countries->get($countryId);
-        $countryName = $country->name;
 
-        $totalResults = count($lawfirms);
+public function lawfirmsByCountry($countryId)
+{
+    // Load the required models
+    $this->loadModel('Listings');
+    $this->loadModel('Countries');
+    $this->loadModel('States');
+    $this->loadModel('PracticeArea');
 
-    
-        // Iterate over each lawyer to process their practice areas
-        foreach ($lawfirms as $lawfirm) {
-            // Explode the comma-separated practice_area string into an array of IDs
-            $practiceAreaIds = explode(',', $lawfirm->practice_area);
-    
-            // Fetch the corresponding practice area names from the PracticeArea model
-            $practiceAreas = $this->PracticeArea->find('all', [
-                'conditions' => ['PracticeArea.sno IN' => $practiceAreaIds],
-            ])->toArray();
-    
-            // Attach the country name and practice area names to each lawyer
-            $lawfirm->country_name = $countryName;
-            $lawfirm->practice_area_name = implode(', ', $practiceAreas);
-        }
-    
-        // Pass data to the view
-        $this->set(compact('lawfirms', 'countryName', 'totalResults', 'countryName'));
+    // Fetch all practice areas for the dropdown
+    $practiceAreasList = $this->PracticeArea->find('list', [
+        'keyField' => 'sno',
+        'valueField' => 'practice_area_title',
+    ])->toArray();
+
+    $statesList = $this->States->find('list', [
+        'keyField' => 'id',
+        'valueField' => 'name',
+        'conditions' => ['States.country_id' => $countryId],
+    ])->toArray();
+
+    // Fetch the selected practice area from the query parameters
+    $selectedPracticeArea = $this->request->getQuery('practice_area');
+    $selectedState = $this->request->getQuery('state');
+
+
+    // Create the base conditions for fetching law firms
+    $conditions = [
+        'Listings.country' => $countryId,
+        'Listings.listing_type' => 'Law Firm'
+    ];
+
+    // If a practice area is selected, add it to the conditions
+    if ($selectedPracticeArea) {
+        $conditions[] = "FIND_IN_SET('$selectedPracticeArea', Listings.practice_area)";
     }
-    
+
+    if ($selectedState) {
+        $conditions['Listings.state'] = $selectedState;
+    }
+
+    // Fetch all law firms for the selected country and practice area
+    $lawfirms = $this->Listings->find('all', [
+        'conditions' => $conditions,
+    ])->toArray();
+
+    // Fetch the country name
+    $country = $this->Countries->get($countryId);
+    $countryName = $country->name;
+
+    $totalResults = count($lawfirms);
+
+    // Iterate over each law firm to process their practice areas
+    foreach ($lawfirms as $lawfirm) {
+        $practiceAreaIds = explode(',', $lawfirm->practice_area);
+        $practiceAreas = $this->PracticeArea->find('list', [
+            'conditions' => ['PracticeArea.sno IN' => $practiceAreaIds],
+            'valueField' => 'practice_area_title',
+        ])->toArray();
+        $lawfirm->country_name = $countryName;
+        $lawfirm->practice_area_name = implode(', ', $practiceAreas);
+    }
+
+    // Set data for the view
+    $this->set(compact('lawfirms',  'statesList', 'selectedState', 'countryName', 'totalResults', 'practiceAreasList', 'selectedPracticeArea'));
+}
+
     
     public function viewLawyerProfile($id)
 {
@@ -291,24 +330,110 @@ public function viewLawfirmProfile($id)
 
 
     public function practiceareas()
-    {
-        // Fetching all practice areas
-        $practiceAreas = $this->Practicearea->find('all', [
-            'order' => ['Practicearea.practice_area_title' => 'ASC']
-        ])->toArray();
+{
+    // Fetch all practice areas ordered alphabetically
+    $practiceAreas = $this->Practicearea->find('all', [
+        'order' => ['Practicearea.practice_area_title' => 'ASC']
+    ])->toArray();
 
-        // Grouping practice areas alphabetically
-        $groupedPracticeAreas = [];
-        foreach ($practiceAreas as $practicearea) {
-            $firstLetter = strtoupper($practicearea->practice_area_title[0]);
-            if (!isset($groupedPracticeAreas[$firstLetter])) {
-                $groupedPracticeAreas[$firstLetter] = [];
-            }
-            $groupedPracticeAreas[$firstLetter][] = $practicearea;
+    // Grouping practice areas alphabetically
+    $groupedPracticeAreas = [];
+    foreach ($practiceAreas as $practicearea) {
+        $firstLetter = strtoupper($practicearea->practice_area_title[0]);
+        if (!isset($groupedPracticeAreas[$firstLetter])) {
+            $groupedPracticeAreas[$firstLetter] = [];
         }
-
-        $this->set(compact('groupedPracticeAreas'));
+        $groupedPracticeAreas[$firstLetter][] = $practicearea;
     }
+
+    $this->set(compact('groupedPracticeAreas'));
+}
+
+public function countriesByPracticeArea($practiceAreaId)
+{
+    // Load the required models
+    $this->loadModel('Countries');
+
+    // Fetch the practice area for displaying the title
+    $practiceArea = $this->Practicearea->get($practiceAreaId);
+
+    // Fetch all countries (without filtering by practice area)
+    $countries = $this->Countries->find('all')->toArray();
+
+    $groupedCountries = [];
+    foreach ($countries as $country) {
+        $firstLetter = strtoupper($country->name[0]);
+        if (!isset($groupedCountries[$firstLetter])) {
+            $groupedCountries[$firstLetter] = [];
+        }
+        $groupedCountries[$firstLetter][] = $country;
+    }
+
+    $this->set(compact('practiceArea', 'countries', 'groupedCountries'));
+}
+
+public function listingsByPracticeAreaAndCountry($practiceAreaId, $countryId)
+{
+    // Load the necessary models
+    $this->loadModel('States');
+    $this->loadModel('Practicearea');
+    
+    // Fetch the listings based on the selected practice area, country, and optionally the state
+    $stateId = $this->request->getQuery('state_id');
+    
+    $conditions = [
+        "FIND_IN_SET(:practiceAreaId, Listings.practice_area)",
+        "FIND_IN_SET(:countryId, Listings.country)"
+    ];
+
+    // Add state filter if a state is selected
+    if (!empty($stateId)) {
+        $conditions[] = "Listings.state = :stateId";
+    }
+
+    $query = $this->Listings->find('all')
+        ->where($conditions)
+        ->bind(':practiceAreaId', $practiceAreaId, 'integer')
+        ->bind(':countryId', $countryId, 'integer');
+
+    if (!empty($stateId)) {
+        $query->bind(':stateId', $stateId, 'integer');
+    }
+
+    $listings = $query->toArray();
+
+
+    // Fetch country, practice area, and states
+    $country = $this->Countries->get($countryId);
+    $countryName = $country->name;
+
+    $practiceArea = $this->Practicearea->get($practiceAreaId);
+    $practiceAreaTitle = $practiceArea->practice_area_title;
+
+    // Fetch states of the selected country
+    $statesList = $this->States->find('list', [
+        'conditions' => ['States.country_id' => $countryId],
+        'keyField' => 'id',
+        'valueField' => 'name'
+    ])->toArray();
+
+    
+
+
+    $practiceAreasList = $this->Practicearea->find('list', [
+        'keyField' => 'sno',
+        'valueField' => 'practice_area_title',
+    ])->toArray();
+
+    // Calculate total results
+    $totalResults = count($listings);
+
+    // Pass data to the view
+    $this->set(compact('listings', 'practiceAreasList', 'countryName', 'practiceAreaTitle', 'country', 'practiceArea', 'practiceAreaId', 'totalResults', 'statesList', 'stateId'));
+}
+
+
+
 
 
     public function practiceareasByCountry($practiceAreaId)

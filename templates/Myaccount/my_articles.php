@@ -22,7 +22,7 @@
     <!-- Banner -->
     
     <!-- Content Section -->
-    <div class="m-3">
+    <div class="m-3 mb-5">
         <div class="row">
             <!-- Filter Section -->
             <?= $this->element('user-dashboard') ?>
@@ -30,33 +30,39 @@
             <div class="col-md-9 shadow ">
 
 
-            <div class = "d-flex justify-content-center mt-3 cc h4">
-MY LAW ARTICLES
-</div>
+            <div class="cl-2 d-flex text-uppercase justify-content-center h5 p-2">
+            My Law Articles
+                </div>
 <hr>
+                <div class="bgcc mt-2 p-2 text-white">
+                    Articles Posted
+                </div>
 
 
 <div class = "p-4">
 <?php if (!empty($lawarticles)): ?>
         <?php foreach ($lawarticles as $lawarticle): ?>
             <div class="listing-item">
+            
     <div class="listing-info">
-        <h6 class="cl">
-            <?= $this->Html->link(h($lawarticle->article_title), ['action' => 'viewLawArticle', $lawarticle->id]) ?>
-        </h6>
-        <div class="at-1">
-            <p>Submitted on: <span class="cl"><?= h($lawarticle->added_on) ?></span> Submitted by: <span class="cl"><?= h($lawarticle->added_by) ?></span></p>
+    <div class=" bg-light ">
+            <p> <i class=" mx-2 bi bi-patch-plus-fill"></i>Submitted on: <span class = "mx-1"><?= h($lawarticle->added_on) ?></p>
         </div>
-        <div class="at-1">
+        <h6 class="cl">
+            <?= $this->Html->link(h($lawarticle->article_title), ['action' => 'view', 'controller' => 'Articlepage', $lawarticle->id]) ?>
+        </h6>
+       
+        <div>
             <?php 
             $words = explode(' ', $lawarticle->article_body);
             $excerpt = implode(' ', array_slice($words, 0, 30)) . '...';
             ?>
-            <?= h($excerpt) ?>
-            <?= $this->Html->link('Read More', ['action' => 'viewLawArticle', $lawarticle->id], ['class' => 'read-more-link']) ?>
+            <?= $excerpt ?>
+            <?= $this->Html->link('Read More', ['action' => 'view', 'controller' => 'Articlepage', $lawarticle->id], ['class' => 'read-more-link']) ?>
         </div>
     </div>
 </div>
+
      <?php endforeach; ?>
 
 <?php else: ?>
@@ -64,9 +70,47 @@ MY LAW ARTICLES
 <?php endif; ?> 
         
 </div>
+<div class="bgcc mt-2 p-2 text-white">
+                    Articles Pending For Approval
+                </div>
+
+                <div class = "p-4">
+<?php if (!empty($lawarticles2)): ?>
+        <?php foreach ($lawarticles2 as $lawarticle): ?>
+            <div class="listing-item">
+            
+    <div class="listing-info">
+    <div class=" bg-light ">
+            <p> <i class=" mx-2 bi bi-patch-plus-fill"></i>Submitted on: <span class = "mx-1"><?= h($lawarticle->added_on) ?></p>
+        </div>
+        <hr>
+        <h6 class="cl">
+            <?= $this->Html->link(h($lawarticle->article_title), ['action' => 'view', 'controller' => 'Articlepage', $lawarticle->id]) ?>
+        </h6>
+       
+        <div >
+            <?php 
+            $words = explode(' ', $lawarticle->article_body);
+            $excerpt = implode(' ', array_slice($words, 0, 30)) . '...';
+            ?>
+            <?= $excerpt ?>
+            <?= $this->Html->link('Read More', ['action' => 'view', 'controller' => 'Articlepage', $lawarticle->id], ['class' => 'read-more-link']) ?>
         </div>
     </div>
 </div>
+
+     <?php endforeach; ?>
+
+<?php else: ?>
+    <p>You have no articles pending for approval.</p>
+<?php endif; ?> 
+        
+</div>
+        </div>
+        
+    </div>
+</div>
+
                 
             </div>
         </div>

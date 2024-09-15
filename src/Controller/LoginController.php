@@ -57,19 +57,19 @@ class LoginController extends AppController
                     $this->Flash->success(__('Registration successful!'));
     
                     // Attempt to send the email
-                    try {
-                        $mailer = new Mailer('default');
-                        $mailer->setFrom(['test@unitedlawhouse.com' => 'United Law House'])
-                            ->setTo($user->email)
-                            ->setSubject('Welcome to Our Website')
-                            ->deliver('Hello ' . $user->firstname . ', thank you for registering with us!');
+                    //try {
+                       // $mailer = new Mailer('default');
+                       // $mailer->setFrom(['test@unitedlawhouse.com' => 'United Law House'])
+                            //->setTo($user->email)
+                            //->setSubject('Welcome to Our Website')
+                            //->deliver('Hello ' . $user->firstname . ', thank you for registering with us!');
     
-                        $this->Flash->success(__('Registration successful! A confirmation email has been sent to your email address.'));
+                        //$this->Flash->success(__('Registration successful! A confirmation email has been sent to your email address.'));
     
-                    } catch (MailerException $e) {
-                        \Cake\Log\Log::error('Email sending failed: ' . $e->getMessage());
-                        $this->Flash->error(__('Registration was successful, but we couldn’t send a confirmation email.'));
-                    }
+                   // } catch (MailerException $e) {
+                     //   \Cake\Log\Log::error('Email sending failed: ' . $e->getMessage());
+                    //    $this->Flash->error(__('Registration was successful, but we couldn’t send a confirmation email.'));
+                   // }
     
                     $this->request->getSession()->delete('captcha_code');
                     return $this->redirect(['action' => 'login']);

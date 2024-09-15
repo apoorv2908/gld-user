@@ -29,26 +29,15 @@
       <?= $this->element('header') ?>
 
 
-      <section class="slider_section ">
-            <div class="slider_bg_box ">
-            <?= $this->Html->image('about.jpg') ?>            
+      <div class="section mt-0 ">
+         <div class=" py-5 breadcrumbs-wrap apt-60 apb-60 apt-40-sm apb-40-sm" style="background: linear-gradient(rgba(51, 104, 198,0.3),rgba(51, 104, 198,0.8)),url(../img/about.jpg) center/cover no-repeat; ">
+      <div class="text-center">
+        <div class="breadcrumbs">
+          <h1 class="font36 text-white font30-sm fw-bold text-uppercase"> <span id="Headername1">CONTACT US
+          </span></h1>
         </div>
-            <div id="customCarousel1" class="carousel slide" data-ride="carousel">
-               <div class="carousel-inner">
-                  <div class="carousel-item active">
-                     <div class="container ">
-                        <div class="row">
-                           <div class="col-md-7 col-lg-12 ">
-                              <div class = "d-flex justify-content-center"> 
-                                    <p class = "text-white h2">CONTACT US</P>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-              
-            </div>
-         </section>
+      </div>
+    </div>
 
 <div class = "bg-light">
 
@@ -96,21 +85,20 @@
 
     ]) ?>
 
-<hr>
-    <div class="captcha">
-        <?= $this->Captcha->display() ?>
-        <?= $this->Form->control('captcha', [
-            'required' => true,
-            'label' => '<strong>Enter CAPTCHA <span style="color: red;">*</span></strong>',
-            'escape' => false,
-            'placeholder' => "Enter CAPTCHA Code"
-
-
-        ]) ?>
-    </div>
+<div class="captcha-field">
+        <span class="captcha-code p-2 bg-light border rounded mr-2 h3 text-decoration-line-through" 
+      style="background-image: url('../img/colab.jpg'); background-size: cover;">
+    <?= h($captchaCode) ?>
+</span> <br><br>
+           <?= $this->Form->control('captcha', ['required' => true, 'placeholder' => 'Enter the CAPTCHA code', 'class' => 'fw-bold', 'label' => false]) ?>
+        </div></b>
+    </fieldset>
+    <?= $this->Form->submit(__('Submit', ['class' => 'btn btn-primary'])); ?>
+    <?= $this->Form->end() ?>
+</div>
+</div>
 </fieldset>
 
-    <?= $this->Form->submit(__('Submit', ['class' => 'btn btn-primary'])); ?>
     <?= $this->Form->end() ?>
 </div>
 </div>

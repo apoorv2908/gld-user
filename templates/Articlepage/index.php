@@ -12,13 +12,15 @@
       <meta name="author" content="" />
       <link rel="shortcut icon" href="images/favicon.png" type="">
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" integrity="sha384-4LISF5TTJX/fLmGSxO53rV4miRxdg84mZsxmO8Rx5jGtp/LbrixFETvWa5a6sESd" crossorigin="anonymous">
-      <title>Famms - Fashion HTML Template</title>
+      <title>Law Articles - Global Law Directory</title>
       <!-- bootstrap core css -->
       <?= $this->Html->css(['bootstrap.css', 'font-awesome.min.css', 'style.css', 'responsive.css']) ?>
    </head>
    <body>
     <!-- Header -->
     <?= $this->element('header') ?>
+
+    
     <?= $this->element('banner-2') ?>
 
 
@@ -35,7 +37,7 @@
                     <div class="card-body">
                         <?= $this->Form->create(null, ['type' => 'get']) ?>
                         <div class="form-group">
-                            <label for="category">Select a Practice Area</label>
+                            <label for="category">Find Law Articles by Practice Areas</label>
                             <?= $this->Form->select('category', $practiceareas, ['empty' => 'All Categories', 'class' => 'form-control', 'id' => 'category']) ?>
                         </div>
                         <?= $this->Form->submit('Apply Filter', ['class' => 'btn btn-primary btn-block mt-3']) ?>
@@ -47,7 +49,7 @@
             <!-- Articles Section -->
             <div class="col-md-9">
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h5>Found Results</h5>
+                <h5>Found <?= h($totalResults ?? 0) ?> Results</h5>
                     <div>
                         <?= $this->Form->create(null, ['type' => 'get', 'class' => 'd-inline-block']) ?>
                         <label for="entries">Show</label>
@@ -64,16 +66,16 @@
                 <hr>
 
                 <?php foreach ($lawarticles as $article): ?>
-                <div class="article bg-light mt-3 p-2 shadow" style="border-radius: 10px;">
-                    <h3 class="text-primary">
-                        <?= $this->Html->link($article->article_title, ['controller' => 'Articlepage', 'action' => 'view', $article->id]) ?>
-                    </h3>
+                <div class="article bg-light mt-3 p-3 shadow" style="border-radius: 10px;">
+                <h3>
+    <?= $this->Html->link($article->article_title, ['controller' => 'Articlepage', 'action' => 'view', $article->id], ['style' => 'color: #002149;']) ?>
+</h3>
+
                     <hr>
-                    <p class="text-secondary">
-                        <i class="bi bi-person-fill"></i> Added By: <?= h($article->added_by) ?><span class ="mx-3"></span>
-                        <i class="bi bi-tags-fill "></i> Category: <?= h($article->category) ?><span class ="mx-3"></span>
-                        <i class="bi bi-calendar "></i> Added On: <?= h($article->added_on) ?><span class ="mx-3"></span>
-                        <i class="bi bi-eye-fill"></i> Views: <?= h($article->views) ?><span class ="mx-3"></span>
+                    <p class="text-secondary d-flex justify-content-end">
+                        <i class="bi bi-person-fill mx-2"></i> Added By: <?= h($article->added_by) ?><span class ="mx-3"></span>
+                        <i class="bi bi-calendar mx-2 "></i> Added On: <?= h($article->added_on) ?><span class ="mx-3"></span>
+                        <i class="bi bi-eye-fill mx-2"></i> Views: <?= h($article->views) ?><span class ="mx-3"></span>
                     </p>
                     <p> <?php 
             $words = explode(' ', $article->article_body);
@@ -93,3 +95,5 @@
     <?= $this->element('footer') ?>
 
 </body></html>
+
+

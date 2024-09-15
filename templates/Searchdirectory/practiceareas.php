@@ -19,9 +19,20 @@
     <!-- Header -->
     <?= $this->element('header') ?>
     <!-- Banner -->
-    <div class="container my-5">
-    <h3 class="text-center mb-4">Select a Country</h3>
-    <div class=" text-center mb-4">
+     
+    <div class="section mt-0 ">
+         <div class=" py-5 breadcrumbs-wrap apt-60 apb-60 apt-40-sm apb-40-sm" style="background: linear-gradient(rgba(51, 104, 198,0.3),rgba(51, 104, 198,0.8)),url(../img/map.jpg) center/cover no-repeat; ">
+      <div class="text-center">
+        <div class="breadcrumbs">
+          <h1 class="font36 text-white font30-sm fw-bold text-uppercase"> <span id="Headername1">FIND LAWYERS & LAW FIRMS BY PRACTICE AREAS</span></h1>
+        </div>
+      </div>
+    </div>
+ 
+</div>
+<div class="container my-5">
+    <h3 class="text-center mb-4">Select a Practice Area</h3>
+    <div class="text-center mb-4">
         <?php foreach (range('A', 'Z') as $letter): ?>
             <a href="#<?= $letter ?>" class="btn btn-outline-primary btn-sm mx-1"><?= $letter ?></a>
         <?php endforeach; ?>
@@ -35,7 +46,7 @@
             <div class="row">
                 <?php foreach ($practiceAreas as $practicearea): ?>
                     <div class="col-md-3 col-sm-6 mb-3">
-                        <a href="<?= $this->Url->build(['action' => 'practiceareasByCountry', $practicearea->sno]) ?>" class="btn btn-outline-secondary btn-block country-item">
+                        <a href="<?= $this->Url->build(['action' => 'countriesByPracticeArea', $practicearea->sno]) ?>" class="btn btn-outline-secondary btn-block country-item">
                             <?= h($practicearea->practice_area_title) ?>
                         </a>
                     </div>
@@ -44,5 +55,7 @@
         </div>
     <?php endforeach; ?>
 </div>
+
+
 </body>
 </html>

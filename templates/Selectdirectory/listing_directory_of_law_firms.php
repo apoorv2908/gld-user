@@ -11,7 +11,7 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <link rel="shortcut icon" href="images/favicon.png" type="">
-    <title>Famms - Fashion HTML Template</title>
+    <title>Lawfirms Listing</title>
     <!-- bootstrap core css -->
     <?= $this->Html->css(['bootstrap.css', 'font-awesome.min.css', 'style.css', 'responsive.css']) ?>
 </head>

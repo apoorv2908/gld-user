@@ -12,45 +12,27 @@
     <?= $this->Html->css(['bootstrap.css', 'font-awesome.min.css', 'style.css', 'responsive.css']) ?>
 </head>
 <style>
-.registration-container{
-    width: 800px;
-    margin: 50px auto;
-  
-}
+
 </style>
 <body>
     <!-- Header -->
     <?= $this->element('header') ?>
     <!-- Banner -->
-    <section class="slider_section ">
-        <div class="slider_bg_box">
-            <?= $this->Html->image('privacy.jpg') ?>            
+    <div class="section mt-0 ">
+         <div class=" py-5 breadcrumbs-wrap apt-60 apb-60 apt-40-sm apb-40-sm" style="background: linear-gradient(rgba(51, 104, 198,0.3),rgba(51, 104, 198,0.8)),url(../img/privacy.jpg) center/cover no-repeat; ">
+      <div class="text-center">
+        <div class="breadcrumbs">
+          <h1 class="font36 text-white font30-sm fw-bold text-uppercase"> <span id="Headername1">REGISTRATION </span></h1>
         </div>
-        <div id="customCarousel1" class="carousel slide" data-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <div class="container ">
-                        <div class="row">
-                            <div class="col-md-7 col-lg-12 ">
-                                <div class="d-flex justify-content-center">
-                                    <h1 class="text-white text-bold">
-                                        REGISTRATION
-                                    </h1>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+      </div>
+    </div>
     <div class="registration-container">
 
     <div class="users form m-5 p-5 shadow ">
-    <h3>Registration: Create Account</h3>
+    <h3 class = "text-uppercase cl-2 d-flex justify-content-center mb-3">Registration : Create An Account</h3>
     <hr>
     <?= $this->Form->create($user) ?>
-    <fieldset><b>
+    <fieldset class = "mt-4"><b>
     <?= $this->Form->control('firstname', [
     'required' => true,
     'placeholder' => 'Enter your firstname',
@@ -110,10 +92,13 @@
     'label' => ['text' => 'Password *', 'escape' => false, 'style' => 'color: black;']
 ]) ?>
 
-<hr>
-        <div class="captcha-field">
-            <label for="captcha" class = "h3 border p-1 bg-light"> <?= $captchaCode ?></label>
-            <?= $this->Form->control('captcha', ['required' => true, 'placeholder' => 'Enter the CAPTCHA code', 'class' => 'fw-bold', 'label' => false]) ?>
+<br>
+<div class="captcha-field">
+        <span class="captcha-code p-2 bg-light border rounded mr-2 h3 text-decoration-line-through" 
+      style="background-image: url('../img/colab.jpg'); background-size: cover;">
+    <?= h($captchaCode) ?>
+</span> <br><br>
+           <?= $this->Form->control('captcha', ['required' => true, 'placeholder' => 'Enter the CAPTCHA code', 'class' => 'fw-bold', 'label' => false]) ?>
         </div></b>
     </fieldset>
     <?= $this->Form->submit(__('Register', ['class' => 'btn btn-primary'])); ?>

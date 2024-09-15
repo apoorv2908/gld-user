@@ -1,24 +1,15 @@
 
 
-<section class="slider_section ">
-            <div class="slider_bg_box">
-            <?= $this->Html->image('tnc.jpg') ?>            
+
+
+   
+         <div class="section mt-0 ">
+         <div class=" py-5 breadcrumbs-wrap apt-60 apb-60 apt-40-sm apb-40-sm" style="background: linear-gradient(rgba(51, 104, 198,0.3),rgba(51, 104, 198,0.8)),url(../img/tnc.jpg) center/cover no-repeat; ">
+      <div class="text-center">
+        <div class="breadcrumbs">
+          <h1 class="font36 text-white font30-sm fw-bold text-uppercase"> <span id="Headername1">Law Articles</span></h1>
         </div>
-            <div id="customCarousel1" class="carousel slide" data-ride="carousel">
-               <div class="carousel-inner">
-                  <div class="carousel-item active">
-                     <div class="container ">
-                        <div class="row">
-                           <div class="col-md-7 col-lg-12 ">
-                              <div class = "d-flex justify-content-center">
-                                 <h1>
-                                    LAW ARTICLES
-                                 </h1>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-              
-            </div>
-         </section>
+      </div>
+    </div>
+ 
+    </div

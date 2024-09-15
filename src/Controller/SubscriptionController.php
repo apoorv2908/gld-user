@@ -75,7 +75,7 @@ class SubscriptionController extends AppController
                     $this->Flash->success(__('The subscription has been saved.'));
     
                     // Redirect to the payment access method with the order ID
-                    return $this->redirect(['controller' => 'Payments', 'action' => 'accessPayment', $subscription->id]);
+                    return $this->redirect(['controller' => 'Payments', 'action' => 'createSession', $subscription->id]);
                 } else {
                     $this->Flash->error(__('The order ID could not be saved. Please, try again.'));
                 }
@@ -92,48 +92,4 @@ class SubscriptionController extends AppController
 
 
 
-    /**
-     * Edit method
-     *
-     * @param string|null $id Subscription id.
-     * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function edit($id = null)
-    {
-        $subscription = $this->Subscription->get($id, [
-            'contain' => [],
-        ]);
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $subscription = $this->Subscription->patchEntity($subscription, $this->request->getData());
-            if ($this->Subscription->save($subscription)) {
-                $this->Flash->success(__('The subscription has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('The subscription could not be saved. Please, try again.'));
-        }
-        $users = $this->Subscription->Users->find('list', ['limit' => 200])->all();
-        $this->set(compact('subscription', 'users'));
-    }
-
-    /**
-     * Delete method
-     *
-     * @param string|null $id Subscription id.
-     * @return \Cake\Http\Response|null|void Redirects to index.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function delete($id = null)
-    {
-        $this->request->allowMethod(['post', 'delete']);
-        $subscription = $this->Subscription->get($id);
-        if ($this->Subscription->delete($subscription)) {
-            $this->Flash->success(__('The subscription has been deleted.'));
-        } else {
-            $this->Flash->error(__('The subscription could not be deleted. Please, try again.'));
-        }
-
-        return $this->redirect(['action' => 'index']);
-    }
 }

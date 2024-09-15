@@ -14,7 +14,7 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <link rel="shortcut icon" href="images/favicon.png" type="">
-    <title>Edit Details - Global Law Directory</title>
+    <title>Edit My Details - Global Law Directory</title>
     <!-- bootstrap core css -->
     <?= $this->Html->css(['bootstrap.css', 'font-awesome.min.css', 'style.css', 'responsive.css']) ?>
 </head>
@@ -22,46 +22,25 @@
     <!-- Header -->
     <?= $this->element('header') ?>
     <!-- Banner -->
-    <section class="slider_section ">
-        <div class="slider_bg_box">
-            <?= $this->Html->image('privacy.jpg') ?>            
-        </div>
-        <div id="customCarousel1" class="carousel slide" data-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <div class="container ">
-                        <div class="row">
-                            <div class="col-md-7 col-lg-12 ">
-                                <div class = "d-flex justify-content-center">
-                                    <h1 class = "text-white text-bold">
-                                        MY ACCOUNT
-                                    </h1>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    
     <!-- Content Section -->
     <div class="m-3">
         <div class="row">
             <!-- Filter Section -->
             <?= $this->element('user-dashboard') ?>
             <!-- Articles Section -->
-            <div class="col-md-6">
+            <div class="col-md-9 shadow">
 
-                <div class="d-flex justify-content-center h5 mb-3">
-                    ACCOUNT ALERTS
+                <div class="cl-2 d-flex text-uppercase justify-content-center h5 p-2">
+                   Edit Account Information
                 </div>
                
                 
                 <hr>
+                <p class = "text-danger">*For Changes, Rewrite and Save the Details</p>
                 <div class="mt-4 px-4">
             <?= $this->Form->create($user) ?>
             <fieldset>
-                <legend><?= __('Edit Your Details') ?></legend>
                 <?php
                     echo $this->Form->control('firstname');
                     echo $this->Form->control('lastname');
@@ -74,7 +53,9 @@
 
                 ?>
             </fieldset>
-            <?= $this->Form->button(__('Save Changes')) ?>
+            <div class = "d-flex justify-content-end mb-4">
+            <?= $this->Form->submit(__('Update', ['class' => 'btn btn-primary'])); ?>
+</div>
             <?= $this->Form->end() ?>
                 </div>
 
@@ -82,21 +63,7 @@
 
 
 
-            <div class="col-md-3">
-            <div class="card">
-                    <div class="card-header">
-                        <h5> Submit Listing</h5>
-                    </div>
-                    <div class="card-body">
-                        <form>
-                            <button class="btn btn-primary btn-block">Directory of Lawyers</button>
-                            <button class="btn btn-primary btn-block">Directory of Law Firms</button>
-                        </form>
-                    </div>
-                </div>
-
-
-            </div>
+           
         </div>
     </div>
     <!-- Footer -->

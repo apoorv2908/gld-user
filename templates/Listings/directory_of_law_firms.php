@@ -19,28 +19,17 @@
     <!-- Header -->
     <?= $this->element('header') ?>
     <!-- Banner -->
-    <section class="slider_section ">
-        <div class="slider_bg_box">
-            <?= $this->Html->image('about.jpg') ?>            
+
+    <div class="section mt-0 ">
+         <div class=" py-5 breadcrumbs-wrap apt-60 apb-60 apt-40-sm apb-40-sm" style="background: linear-gradient(rgba(51, 104, 198,0.3),rgba(51, 104, 198,0.8)),url(../img/about.jpg) center/cover no-repeat; ">
+      <div class="text-center">
+        <div class="breadcrumbs">
+          <h1 class="font36 text-white font30-sm fw-bold text-uppercase"> <span id="Headername1">Submit Your Listing
+          </span></h1>
         </div>
-        <div id="customCarousel1" class="carousel slide" data-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <div class="container ">
-                        <div class="row">
-                            <div class="col-md-7 col-lg-12 ">
-                                <div class = "d-flex justify-content-center">
-                                    <h1 class = "text-white text-bold">
-                                        SELECT A DIRECTORY
-                                    </h1>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+      </div>
+    </div>
+    
     <!-- Content Section -->
     <div class="m-3">
         <div class="row">
@@ -49,8 +38,9 @@
 
             <!-- Articles Section -->
             <div class="col-md-9 shadow">
-                <div class="cc d-flex justify-content-center h3 mt-1 text-uppercase">
-                    Submit a Listing - Directory of Law Firms
+            <div class="cl-2 d-flex text-uppercase justify-content-center h5 p-2">
+            Submit a Listing - Directory of Law Firms
+
                 </div>
                 <hr>
 
@@ -69,6 +59,7 @@
                             ],
                             'required' => true,
                             'class' => 'form-control',
+                            'placeholder' => 'Name of Law Firm'
                         ]) ?>
 
                         <hr class="mt-5 mb-3 text-danger">
@@ -80,9 +71,12 @@
                                 'text' => 'First Name <span style="color: red; font-size: 20px; ">*</span>',
                                 'escape' => false,
                                 'class' => 'fw-bold'
+
                             ],
                             'required' => true,
                             'class' => 'form-control',
+                            'placeholder' => 'Contact Person Firstname'
+
                         ]) ?>
 
 
@@ -94,6 +88,8 @@
                             ],
                             'required' => true,
                             'class' => 'form-control',
+                            'placeholder' => 'Contact Person Lastname'
+
                         ]) ?>
 
                         <?= $this->Form->control('designation', [
@@ -164,7 +160,7 @@
 
                         <?= $this->Form->control('street_address', [
                             'label' => [
-                                'text' => 'Street Address Line 1 <span style="color: red; font-size: 20px; ">*</span>',
+                                'text' => 'Street Address <span style="color: red; font-size: 20px; ">*</span>',
                                 'escape' => false,
                                 'class' => 'fw-bold'
                             ],
@@ -215,7 +211,7 @@
                             ],
                             'required' => false,
                             'class' => 'form-control',
-                            'placeholder' => 'Include country code'
+                            'placeholder' => 'Landline/Telephone Number'
                         ]) ?>
                         <?= $this->Form->control('mobile', [
                             'label' => [
@@ -225,7 +221,7 @@
                             ],
                             'required' => true,
                             'class' => 'form-control',
-                            'placeholder' => 'Include country code'
+                            'placeholder' => 'Mobile Number'
                         ]) ?>
                         <?= $this->Form->control('image', [
                             'label' => [
@@ -322,7 +318,8 @@ Hyperlinks are not allowed. In case hyperlinks are found, the listing will be su
                                 'class' => 'fw-bold'
                             ],
                             'required' => true,
-                            'class' => 'form-control'
+                            'class' => 'form-control',
+                            'placeholder' => 'Yes/No'
                         ]) ?>
 
 

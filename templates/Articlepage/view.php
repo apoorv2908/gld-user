@@ -13,7 +13,7 @@
     <link rel="shortcut icon" href="images/favicon.png" type="">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" integrity="sha384-4LISF5TTJX/fLmGSxO53rV4miRxdg84mZsxmO8Rx5jGtp/LbrixFETvWa5a6sESd" crossorigin="anonymous">
 
-    <title>Famms - Fashion HTML Template</title>
+    <title><?= h($lawarticles->article_title) ?></title>
     <!-- bootstrap core css -->
     <?= $this->Html->css(['bootstrap.css', 'font-awesome.min.css', 'style.css', 'responsive.css']) ?>
 </head>
@@ -53,12 +53,11 @@
                 <div class="article bg-light mt-3 p-2" style="border-radius: 10px;">
                     <h3 class="text-dark mt-2"><?= h($lawarticles->article_title) ?></h3>
                     <hr>
-                    <p class="text-secondary">
-                        <i class="bi bi-person-fill"></i> Added By: <?= h($lawarticles->added_by) ?><span class ="mx-5"></span>
-                        <i class="bi bi-tags-fill "></i> Category: <?= h($lawarticles->category) ?><span class ="mx-5"></span>
-                        <i class="bi bi-hash "></i> Article ID: <?= h($lawarticles->id) ?><span class ="mx-5"></span>
-                        <i class="bi bi-calendar "></i> Added On: <?= h($lawarticles->added_on) ?><span class ="mx-5"></span>
-                        <i class="bi bi-eye-fill"></i> Views: <?= h($lawarticles->views) ?><span class ="mx-5"></span>
+                    <p class="text-secondary  d-flex justify-content-center">
+                        <i class="bi bi-person-fill mx-2"></i> Added By: <?= h($lawarticles->added_by) ?><span class ="mx-5"></span>
+                        <i class="bi bi-hash mx-2 "></i> Article ID: <?= h($lawarticles->id) ?><span class ="mx-5"></span>
+                        <i class="bi bi-calendar mx-2 "></i> Added On: <?= h($lawarticles->added_on) ?><span class ="mx-5"></span>
+                        <i class="bi bi-eye-fill mx-2"></i> Views: <?= h($lawarticles->views) ?><span class ="mx-5"></span>
                     </p>
                     <hr>
                     <div>

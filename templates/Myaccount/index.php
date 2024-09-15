@@ -11,7 +11,7 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <link rel="shortcut icon" href="images/favicon.png" type="">
-    <title>Famms - Fashion HTML Template</title>
+    <title>My Dashboard - Global Law Directory</title>
     <!-- bootstrap core css -->
     <?= $this->Html->css(['bootstrap.css', 'font-awesome.min.css', 'style.css', 'responsive.css']) ?>
 </head>
@@ -19,66 +19,52 @@
     <!-- Header -->
     <?= $this->element('header') ?>
     <!-- Banner -->
-    <section class="slider_section ">
-        <div class="slider_bg_box">
-            <?= $this->Html->image('privacy.jpg') ?>            
+    <div class="section mt-0 ">
+         <div class=" py-5 breadcrumbs-wrap apt-60 apb-60 apt-40-sm apb-40-sm" style="background: linear-gradient(rgba(51, 104, 198,0.3),rgba(51, 104, 198,0.8)),url(../img/privacy.jpg) center/cover no-repeat; ">
+      <div class="text-center">
+        <div class="breadcrumbs">
+          <h1 class="font36 text-white font30-sm fw-bold text-uppercase"> <span id="Headername1">MY ACCOUNT </span></h1>
         </div>
-        <div id="customCarousel1" class="carousel slide" data-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <div class="container ">
-                        <div class="row">
-                            <div class="col-md-7 col-lg-12 ">
-                                <div class = "d-flex justify-content-center">
-                                    <h1 class = "text-white text-bold">
-                                        MY ACCOUNT
-                                    </h1>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+      </div>
+    </div>
     <!-- Content Section -->
-    <div class="m-3">
+    <div class="m-3 mb-5">
         <div class="row">
             <!-- Filter Section -->
             <?= $this->element('user-dashboard') ?>
             <!-- Articles Section -->
-            <div class="col-md-6">
+            <div class="col-md-6 shadow p-3">
 
-                <div class="d-flex justify-content-center h5 mb-3">
+                <div class="d-flex justify-content-start cl-2 h5 mb-3">
                     ACCOUNT ALERTS
                 </div>
-                <div class="text-danger h6">
-                    <li>
-<a>Submit Your Listings</a>
+<li class = "px-4 mt-4">
+                <?= $this->Html->link("Submit Your Listing", ['action' => 'index', 'controller' => 'Selectdirectory'], ['style' => 'color: red; font-weight: bold;']) ?>
 </li>
-                </div>
-                <div class="d-flex justify-content-center text-danger h5 mb-3 mt-4">
+                        <div class="d-flex justify-content-start cl-2 h5 mb-3 mt-4">
                     LOGIN DETAILS
                 </div>
-                <hr>
                 <div class="mt-4 px-4">
-                    <p>
-                       <b> Name:     </b>            <?= h($loggedInUser->firstname) ?>  <?= h($loggedInUser->lastname) ?>
+                    <table class = "table">
+<tr>
+<th class = "cl-2">Name:</th>
+<td> <?= h($loggedInUser->firstname) ?>  <?= h($loggedInUser->lastname) ?></td>
+</tr>
+
+<tr>
+<th class = "cl-2">Email:</th>
+<td> <?= h($loggedInUser->email) ?></td>
+</tr>
+
+<tr>
+<th class = "cl-2">User ID:</th>
+<td>  <?= h($loggedInUser->id) ?>
+</td>
+</tr>
 
 
-</p>
-                    
-<br>
-                    <p >
-                      <b>  Email:  </b>               <?= h($loggedInUser->email) ?>
-
-</p>
-<br>
-                    <p>
-                      <b>  User Id:      </b>           <?= h($loggedInUser->id) ?>
-
-</p>
-                   
+</table>
+                                  
              <br>      
                 </div>
             </div>
@@ -87,14 +73,17 @@
 
             <div class="col-md-3">
             <div class="card">
-                    <div class="card-header">
-                        <h5> Submit Listing</h5>
+                    <div class="card-header sam text-white">
+                        <h5> SUBMIT LISTING</h5>
                     </div>
                     <div class="card-body">
-                        <form>
-                            <button class="btn btn-primary btn-block">Directory of Lawyers</button>
-                            <button class="btn btn-primary btn-block">Directory of Law Firms</button>
-                        </form>
+                    <div class="m-3">
+    <form>
+        <?= $this->Html->link('Directory of Lawyers', ['controller' => 'Listings', 'action' => 'directoryOfLawyers' ], ['class' => 'btn btn-primary btn-block']) ?>
+        <?= $this->Html->link('Directory of Law Firms', ['controller' => 'Listings', 'action' => 'directoryOfLawfirms'], ['class' => 'btn btn-primary btn-block']) ?>
+    </form>
+</div>
+
                     </div>
                 </div>
 

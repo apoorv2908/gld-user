@@ -23,33 +23,17 @@
       <!-- why section -->
       <?= $this->element('header') ?>
 
-
-      <section class="slider_section ">
-            <div class="slider_bg_box">
-            <?= $this->Html->image('about.jpg') ?>            
+         <div class="section mt-0 ">
+         <div class=" py-5 breadcrumbs-wrap apt-60 apb-60 apt-40-sm apb-40-sm" style="background: linear-gradient(rgba(51, 104, 198,0.3),rgba(51, 104, 198,0.8)),url(../img/map.jpg) center/cover no-repeat; ">
+      <div class="text-center">
+        <div class="breadcrumbs">
+          <h1 class="font36 text-white font30-sm fw-bold text-uppercase"> <span id="Headername1"><?= h($listing->firstname . ' ' . $listing->lastname . ', ' . $listing->listing_type . ' ' . 'AT'. ' ' . $listing->city_name . ', ' . $listing->state_name . ', ' . $listing->country_name) ?></span></h1>
         </div>
-            <div id="customCarousel1" class="carousel slide" data-ride="carousel">
-               <div class="carousel-inner">
-                  <div class="carousel-item active">
-                     <div class="container ">
-                        <div class="row">
-                           <div class="col-md-7 col-lg-12 ">
-                              <div class = "d-flex justify-content-center"> 
-                                 <h2>
-                                 <p class = "text-white text-uppercase h2 fw-bold"><?= h($listing->firstname . ' ' . $listing->lastname . ' ' . $listing->listing_type . ' ' . 'AT'. ' ' . $listing->city_name . ', ' . $listing->state_name . ', ' . $listing->country_name) ?></p>
-                                 </h2>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-              
-            </div>
-         </section>
+      </div>
+    </div>
 
-
-         <div class = "d-flex justify-content-around mt-4 bg-light">
-<div class="listing-details mt-3  ">
+         <div class = "d-flex px-5 justify-content-between mt-4 bg-light">
+<div class="listing-details mt-3 mx-5">
 <div class="listing-image">
                             <img src="<?= $this->Url->image($listing->image) ?>" alt="<?= h($listing->law_firm) ?>">
                         </div>
@@ -65,18 +49,35 @@
    <p><?= h($listing->street_address) ?></p>
    <p><?= h($listing->city_name) ?>, <?= h($listing->state_name) ?>, <?= h($listing->country_name) ?> <?= h($listing->pincode) ?></p>
   <hr></hr>
-   <p class = "text-danger at-1 fw-bold">Contact Person: <?= h($listing->firstname . ' ' . $listing->lastname) ?></p>
-   <p class = "at-1 mx-3"><i class="fa fa-envelope mx-1"></i> <?= h($listing->email) ?></p>
-   <p class = "at-1 mx-3"><i class="fa fa-phone mx-1"></i> <?= h($listing->phone) ?></p>
-   <p class = "at-1 mx-3"><i class="fa fa-mobile mx-1"></i> <?= h($listing->mobile) ?></p>
-   <p class = "at-1 mx-3"><i class="fa fa-globe mx-1"></i> <?= h($listing->website) ?></p><br>
-   <p class="initial-consultation text-success h5"><?= h($listing->initial_consultation ? 'Free Initial Consultation Provided' : 'No Free Initial Consultation Provided') ?></p>
+   <p class = "text-danger fw-bold">Contact Person: <?= h($listing->firstname . ' ' . $listing->lastname) ?></p>
+   <table class = "">
+
+   <tr>
+      <th>
+      <i class="fa fa-envelope mx-1"></i>
+      </th>
+<td>
+<?= h($listing->email) ?>
+      </td>
+
+      </tr>
+
+      <tr> <th><i class="fa fa-phone mx-1"></i>  </th> <td><?= h($listing->phone) ?></td> </tr>
+      <tr> <th><i class="fa fa-mobile mx-1"></i>  </th> <td><?= h($listing->mobile) ?></td> </tr>
+      <tr> <th><i class="fa fa-globe mx-1"></i>  </th> <td><?= h($listing->website) ?></td> </tr>
+
+
+
+      </table>
+  
+
+   <p class="initial-consultation text-success mt-5 h5"><?= h($listing->free_consultation)?>, Free Initial Consultation Provided</p>
 </div>
       </div>
 <div class="listing-map mt-3 ">
         <!-- Add a Google Maps iframe based on the address -->
         <iframe
-            width="600"
+            width="800"
             height="450"
             style="border:0"
             loading="lazy"

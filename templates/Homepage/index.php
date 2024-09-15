@@ -9,13 +9,16 @@
       <!-- Site Metas -->
       <meta name="keywords" content="" />
       <meta name="description" content="" />
+      
       <meta name="author" content="" />
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" integrity="sha384-4LISF5TTJX/fLmGSxO53rV4miRxdg84mZsxmO8Rx5jGtp/LbrixFETvWa5a6sESd" crossorigin="anonymous">
+
       <link rel="shortcut icon" href="images/favicon.png" type="">
       
       <title>Homepage - Global Law Directory</title>
       <!-- bootstrap core css -->
-      <?= $this->Html->css(['bootstrap.css', 'style.css', 'responsive.css']) ?>
+      <?= $this->Html->css(['bootstrap.css', 'style.css', 'style2.css', 'responsive.css']) ?>
+      
 
    </head>
    <body>
@@ -23,13 +26,11 @@
       <?= $this->element('header') ?>
 
       <?= $this->element('banner') ?>
-      <div class = "bg-grey">
+    
       <?= $this->element('content-2') ?>
-      <div>
+    
 
-<div class = "bg-grey">
 <?= $this->element('recentadded') ?>
-</div>
 
 
 
@@ -37,6 +38,7 @@
       <?= $this->element('footer') ?>
 
       <?= $this->Html->script(['jquery-3.4.1.min.js', 'popper.min.js', 'bootstrap.js', 'custom.js' ]) ?>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
    </body>
 </html>

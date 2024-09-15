@@ -11,7 +11,7 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <link rel="shortcut icon" href="images/favicon.png" type="">
-    <title>Famms - Fashion HTML Template</title>
+    <title>Submit Law Article - Global Law Directory</title>
     <!-- bootstrap core css -->
     <?= $this->Html->css(['bootstrap.css', 'font-awesome.min.css', 'style.css', 'responsive.css']) ?>
 
@@ -24,46 +24,58 @@
     <!-- Banner -->
     
     <!-- Content Section -->
-    <div class="m-3">
+    <div class="m-3 mb-5 ">
         <div class="row">
             <!-- Filter Section -->
             <?= $this->element('user-dashboard') ?>
             <!-- Articles Section -->
             <div class="col-md-9 shadow ">
 
-                <div class="d-flex justify-content-center mt-3 cc h4">
-                    SUBMIT LAW ARTICLE
+            <div class="cl-2 d-flex text-uppercase justify-content-center h5 p-2">
+            Submit a Law Article
                 </div>
                 <hr>
-                <div class="bgcc mt-2 p-2 text-white">
-                    Submit a Law Article
-                </div>
+               
 
                 <div class="p-4">
-                    <?= $this->Form->create(null, ['class' => 'row g-3']) ?>
+                    <div class = "px-5">
+
+                    <?= $this->Form->create(null) ?>
+                    <div id="flash-message" class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 1050;">
+    <?= $this->Flash->render() ?>
+</div>
+
                     <div class="col-12">
                         <?= $this->Form->control('article_title', [
                             'class' => 'form-control', 
-                            'label' => ['class' => 'form-label', 'text' => 'Article Title*']
+                            'label' => ['class' => 'form-label', 'text' => 'Article Title*'],
+                            'placeholder' => "Article Title"
                         ]) ?>
                     </div>
-                    <div class="col-12">
-                        <?= $this->Form->control('article_body', [
-                            'type' => 'textarea',
-                            'class' => 'form-control summernote', 
-                            'label' => ['class' => 'form-label', 'text' => 'Article Body*']
-                        ]) ?>
-                    </div>
+
                     <div class="col-12 mt-3">
                         <?= $this->Form->control('category', [
                             'type' => 'select',
                             'options' => ['' => '--select a category--'] + collection($practiceareas)->combine('sno', 'practice_area_title')->toArray(), // Adjust 'sno' and 'practice_area_title' to your actual column names
                             'class' => 'form-control mb-4', 
-                            'label' => ['class' => 'form-label', 'text' => 'Category*']
+                            'label' => ['class' => 'form-label', 'text' => 'Article Category*']
+                        ]) ?>
+                    </div>
+                        </div>
+                    <br>
+
+                    <div class="bgcc mt-2 p-2 mb-4 text-white">
+                     Article
+                </div>
+                    <div class="col-12">
+                        <?= $this->Form->control('article_body', [
+                            'type' => 'textarea',
+                            'class' => 'form-control summernote', 
+                            'label' => false
                         ]) ?>
                     </div>
 
-                    <br>
+                    <hr>
                     <div class="col-12">
                         <?= $this->Form->control('added_on', [
                             'type' => 'date',
@@ -72,7 +84,7 @@
                             'value' => $currentDate,
                             'readonly' => true
                         ]) ?>
-                    </div>
+                    </div><br>
                     <div class="col-12">
                         <?= $this->Form->control('added_by', [
                             'class' => 'form-control', 
@@ -81,10 +93,11 @@
                             'readonly' => true
                         ]) ?>
                     </div>
+                   
                     
-                    <div class="d-flex justify-content-end">
+                    <div class="d-flex justify-content-end mt-4">
                         <div>
-                            <?= $this->Form->button(__('Submit'), ['class' => 'btn btn-primary']) ?>
+                            <?= $this->Form->button(__('Post'), ['class' => 'btn btn-primary']) ?>
                         </div>
                         <div class="mx-3">
                             <?= $this->Form->button(__('Reset'), ['type' => 'reset', 'class' => 'btn btn-secondary']) ?>
@@ -96,7 +109,7 @@
         </div>
     </div>
     
-    <!-- Footer -->
+
     <?= $this->element('footer') ?>
 
     <?= $this->Html->script(['jquery-3.4.1.min.js', 'popper.min.js', 'bootstrap.js', 'custom.js']) ?>
@@ -126,5 +139,16 @@
 });
 
     </script>
+
+<script>
+    // Automatically hide the flash message after 4 seconds
+    setTimeout(function() {
+        var flashMessage = document.getElementById('flash-message');
+        if (flashMessage) {
+            flashMessage.style.display = 'none';
+        }
+    }, 4000);
+</script>
+
 </body>
 </html>

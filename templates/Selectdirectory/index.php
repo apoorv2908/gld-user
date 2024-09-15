@@ -11,7 +11,8 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <link rel="shortcut icon" href="images/favicon.png" type="">
-    <title>Famms - Fashion HTML Template</title>
+    <title>Select Directory - Global Law Directory
+    </title>
     <!-- bootstrap core css -->
     <?= $this->Html->css(['bootstrap.css', 'font-awesome.min.css', 'style.css', 'responsive.css']) ?>
 </head>
@@ -19,28 +20,15 @@
     <!-- Header -->
     <?= $this->element('header') ?>
     <!-- Banner -->
-    <section class="slider_section ">
-        <div class="slider_bg_box">
-            <?= $this->Html->image('about.jpg') ?>            
+    <div class="section mt-0 ">
+         <div class=" py-5 breadcrumbs-wrap apt-60 apb-60 apt-40-sm apb-40-sm" style="background: linear-gradient(rgba(51, 104, 198,0.3),rgba(51, 104, 198,0.8)),url(../img/about.jpg) center/cover no-repeat; ">
+      <div class="text-center">
+        <div class="breadcrumbs">
+          <h1 class="font36 text-white font30-sm fw-bold text-uppercase"> <span id="Headername1">Select A Directory
+          </span></h1>
         </div>
-        <div id="customCarousel1" class="carousel slide" data-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <div class="container ">
-                        <div class="row">
-                            <div class="col-md-7 col-lg-12 ">
-                                <div class = "d-flex justify-content-center">
-                                    <h1 class = "text-white text-bold">
-                                        SELECT A DIRECTORY
-                                    </h1>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+      </div>
+    </div>
     <!-- Content Section -->
     <div class="m-3">
         <div class="row">
@@ -48,17 +36,18 @@
             <?= $this->element('user-dashboard') ?>
             <!-- Articles Section -->
             <div class="col-md-9">
-                <div class="d-flex justify-content-center text-primary h2 mb-3">
-                    SELECT A DIRECTORY
+            <div class="cl-2 d-flex text-uppercase justify-content-start h5 p-2">
+            Select A Directory
+
                 </div>
                 <hr>
                 <div class="d-flex justify-content-center text-danger h6 mb-3">
                     IMPORTANT INSTRUCTIONS
                 </div>
                 <div class="text-danger h6">
-                    1. Global Law Directories provides 5 major directories which have been described below.
+                    1. Global Law Directories provides 2 major directories which have been described below.
                     <br><br>
-                    2. After submitting the listing an option is provided to display the same as a BASIC LISTING absolutely free of cost or a PREMIUM LISTING, which offers a huge advantage over the Basic Listing, on payment of a nominal annual fee of USD 40.
+                    2. After submitting the listing an option is provided to display the same as a BASIC LISTING absolutely free of cost or a PREMIUM LISTING, which offers a huge advantage over the Basic Listing, on payment of a nominal annual fee of USD 29.
                 </div>
                 <div class="d-flex justify-content-center text-danger h6 mb-3 mt-4">
                     PLEASE SELECT THE RELEVANT DIRECTORY THAT BEST SUITS YOUR LISTING.
