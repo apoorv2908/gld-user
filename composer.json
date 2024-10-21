@@ -14,7 +14,7 @@
         "hakito/cakephp-paypal-rest-plugin": "^4.0",
         "mobiledetect/mobiledetectlib": "^3.74",
         "paypal/rest-api-sdk-php": "^1.6",
-        "stripe/stripe-php": "^15.8"
+        "stripe/stripe-php": "^16.1"
     },
     "require-dev": {
         "cakephp/bake": "^2.8",
